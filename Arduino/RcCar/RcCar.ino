@@ -20,6 +20,3 @@ void loop()
     btSerial.write(Serial.read());
   }
 }
-
-
-출처: https://blog.codejun.space/12 [CodeJUN]
