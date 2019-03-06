@@ -1,9 +1,25 @@
-void setup() {
-  // put your setup code here, to run once:
-
+#include <SoftwareSerial.h>
+ 
+int Tx=6; //전송
+int Rx=7; //수신
+ 
+SoftwareSerial btSerial(Tx, Rx);
+ 
+void setup() 
+{
+  Serial.begin(9600);
+  btSerial.begin(9600);
+}
+ 
+void loop()
+{
+  if (btSerial.available()) {       
+    Serial.write(btSerial.read());
+  }
+  if (Serial.available()) {         
+    btSerial.write(Serial.read());
+  }
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
 
-}
+출처: https://blog.codejun.space/12 [CodeJUN]
