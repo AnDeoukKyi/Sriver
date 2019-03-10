@@ -79,6 +79,60 @@ public class LoginActivity extends Activity {
         editTextSend = (EditText)findViewById(R.id.editText_send);
         textViewReceive = (TextView)findViewById(R.id.textView_receive);
 
+        Button btn_1=(Button)findViewById(R.id.btn_1);
+        Button btn_2=(Button)findViewById(R.id.btn_2);
+        Button btn_3=(Button)findViewById(R.id.btn_3);
+        Button btn_4=(Button)findViewById(R.id.btn_4);
+        Button btn_5=(Button)findViewById(R.id.btn_5);
+        Button btn_6=(Button)findViewById(R.id.btn_6);
+        Button btn_7=(Button)findViewById(R.id.btn_7);
+
+        btn_1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(1));
+            }
+        });
+        btn_2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(2));
+            }
+        });
+        btn_3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(3));
+            }
+        });
+        btn_4.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(4));
+            }
+        });
+        btn_5.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(5));
+            }
+        });
+        btn_6.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(6));
+            }
+        });
+        btn_7.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData(Integer.toString(7));
+            }
+        });
+
+
+
+
         buttonSend.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

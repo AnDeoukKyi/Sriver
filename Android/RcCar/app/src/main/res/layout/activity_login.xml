@@ -1,105 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".LoginActivity">
+tools:context=".LoginActivity"
+    android:orientation="vertical">
 
     <LinearLayout
-
         android:layout_width="match_parent"
-
-        android:layout_height="match_parent"
-
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-
         <LinearLayout
-
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
-
-
             <TextView
-
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
                 android:text="수신 받은 데이터 : "/>
 
-
-
             <TextView
-
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
                 android:id="@+id/textView_receive"/>
 
-
-
         </LinearLayout>
-
-
-
         <LinearLayout
-
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
-
-
             <TextView
-
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
                 android:text="송신 할 데이터 : "/>
 
-
-
             <EditText
-
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
                 android:id="@+id/editText_send"
-
                 android:ems="10"/>
-
-
 
         </LinearLayout>
 
-
-
         <Button
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
             android:text="데이터 송신"
-
             android:id="@+id/button_send"/>
-
     </LinearLayout>
 
-
-
-    출처: https://yeolco.tistory.com/80 [열코의 프로그래밍 일기]
-
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="좌직진"/>
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="직진"/>
+            <Button
+                android:id="@+id/btn_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="우직진"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="정지"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="좌후진"/>
+            <Button
+                android:id="@+id/btn_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="후진"/>
+            <Button
+                android:id="@+id/btn_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="우후진"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
