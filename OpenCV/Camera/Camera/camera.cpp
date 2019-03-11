@@ -1,6 +1,8 @@
 #include <opencv2/opencv.hpp>
+#include <Windows.h>
 using namespace cv;
 using namespace std;
+
 
 void calc_direct(Mat Gy, Mat Gx, Mat& direct)
 {
@@ -88,7 +90,7 @@ void  hysteresis_th(Mat max_so, Mat&  hy_img, int low, int high)
 int main()
 {
 
-	VideoCapture capture(1);
+	VideoCapture capture(0);
 	if (!capture.isOpened()) {
 		cout << "카메라가 연결되지 않았습니다." << endl;
 		exit(1);
@@ -98,8 +100,10 @@ int main()
 		Range r1(100, 300), r2(200, 300);
 		Mat frame, tm, gau_img, Gx, Gy, direct, sobel, max_sobel, hy_img, canny;
 		capture.read(frame);
-
-
+		imwrite("1111.jpg", frame);
+		//웹서버에 jpg파일 전송
+		Sleep(1000);
+		/*
 		GaussianBlur(frame, gau_img, Size(5, 5), 0.3);
 		Sobel(gau_img, Gx, CV_32F, 1, 0, 3);
 		Sobel(gau_img, Gy, CV_32F, 0, 1, 3);
@@ -113,8 +117,9 @@ int main()
 
 		imshow("카메라 영상보기", frame);
 		imshow("OpenCV_canny", canny);
-
+		*/
 		if (waitKey(30) >= 0) continue;
+		
 	}
 	return 0;
 }
