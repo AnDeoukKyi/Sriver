@@ -1,0 +1,12 @@
+﻿  camera.cpp
+D:\ProgramFile\OpenCV\opencv\build\include\opencv2/core/mat.hpp(1965): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\ProgramFile\OpenCV\opencv\build\include\opencv2/core/persistence.hpp : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\ProgramFile\OpenCV\opencv\build\include\opencv2/core/utility.hpp : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\ProgramFile\OpenCV\opencv\build\include\opencv2/core/utility.hpp : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  코드를 생성하고 있습니다.
+  7 of 55 functions (12.7%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  Camera.vcxproj -> C:\Users\An\Documents\GitHub\Sriver\OpenCV\Camera\x64\Release\Camera.exe
+  Camera.vcxproj -> C:\Users\An\Documents\GitHub\Sriver\OpenCV\Camera\x64\Release\Camera.pdb (Full PDB)
