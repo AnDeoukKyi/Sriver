@@ -1,5 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <Windows.h>
+#include <iostream>
+
 using namespace cv;
 using namespace std;
 
@@ -87,20 +89,196 @@ void  hysteresis_th(Mat max_so, Mat&  hy_img, int low, int high)
 	}
 }
 
+void CheckBackGround() {
+	int range_count = 0;
+
+	Scalar red(0, 0, 255);
+	Scalar green(153, 174, 124);
+	Scalar blue(255, 0, 0);
+	Scalar yellow(0, 255, 255);
+
+	Scalar magenta(255, 0, 255);
+	//내가 원하는 색깔 선택
+
+
+	Mat rgb_color = Mat(1, 1, CV_8UC3, green);//1,1짜리 행렬로 생성(dot)
+	Mat hsv_color;
+
+	cvtColor(rgb_color, hsv_color, COLOR_BGR2HSV); //BRG->HSV로 변환
+
+
+	int hue = (int)hsv_color.at<Vec3b>(0, 0)[0];//색조
+	int saturation = (int)hsv_color.at<Vec3b>(0, 0)[1];//채도
+	int value = (int)hsv_color.at<Vec3b>(0, 0)[2];//명도
+
+
+	cout << "hue = " << hue << endl;
+	cout << "saturation = " << saturation << endl;
+	cout << "value = " << value << endl;
+
+
+	int low_hue = hue - 10;
+	int high_hue = hue + 10;
+
+	int low_hue1 = 0, low_hue2 = 0;
+	int high_hue1 = 0, high_hue2 = 0;
+
+	if (low_hue < 10) {
+		range_count = 2;
+
+		high_hue1 = 180;
+		low_hue1 = low_hue + 180;
+		high_hue2 = high_hue;
+		low_hue2 = 0;
+	}
+	else if (high_hue > 170) {
+		range_count = 2;
+
+		high_hue1 = low_hue;
+		low_hue1 = 180;
+		high_hue2 = high_hue - 180;
+		low_hue2 = 0;
+	}
+	else {
+		range_count = 1;
+
+		low_hue1 = low_hue;
+		high_hue1 = high_hue;
+	}
+
+
+	cout << low_hue1 << "  " << high_hue1 << endl;
+	cout << low_hue2 << "  " << high_hue2 << endl;
+
+
+	//VideoCapture cap("A.png");
+	Mat img_frame, img_hsv;
+	
+	/*
+	if (!cap.isOpened()) {
+		cerr << "ERROR! Unable to open camera\n";
+		return -1;
+	}
+	*/
+
+	for (;;)
+	{
+		// wait for a new frame from camera and store it into 'frame'
+		//cap.read(img_frame);
+		img_frame = imread("A.png", IMREAD_COLOR);
+
+		// check if we succeeded
+		if (img_frame.empty()) {
+			cerr << "ERROR! blank frame grabbed\n";
+			break;
+		}
+
+
+		//HSV로 변환
+		cvtColor(img_frame, img_hsv, COLOR_BGR2HSV);//BRG->HSV로 변환
+
+		//지정한 HSV 범위를 이용하여 영상을 이진화
+		Mat img_mask1, img_mask2;
+		inRange(img_hsv, Scalar(low_hue1, 20, 50), Scalar(high_hue1, 255, 255), img_mask1);
+		if (range_count == 2) {
+			inRange(img_hsv, Scalar(low_hue2, 20, 50), Scalar(high_hue2, 255, 255), img_mask2);
+			img_mask1 |= img_mask2;
+		}
+
+		imshow("img_mask1", img_mask1);
+
+		//morphological opening 작은 점들을 제거 (노이즈 제거)
+		//erode(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));//모폴로지침식
+		dilate(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(3, 3)));//모폴로지팽창
+
+		
+		//morphological closing 영역의 구멍 메우기 
+		dilate(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(3, 3)));
+		//erode(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+
+		imshow("침", img_mask1);
+
+		//라벨링 
+		Mat img_labels, stats, centroids;
+		int numOfLables = connectedComponentsWithStats(img_mask1, img_labels,
+			stats, centroids, 8, CV_32S);
+
+		//영역박스 그리기
+		int max = -1, idx = 0;
+		for (int j = 1; j < numOfLables; j++) {
+			int area = stats.at<int>(j, CC_STAT_AREA);
+
+			int left = stats.at<int>(j, CC_STAT_LEFT);
+			int top = stats.at<int>(j, CC_STAT_TOP);
+			int width = stats.at<int>(j, CC_STAT_WIDTH);
+			int height = stats.at<int>(j, CC_STAT_HEIGHT);
+
+
+			rectangle(img_frame, Point(left, top), Point(left + width, top + height),
+				Scalar(0, 0, 255), 1);
+
+			putText(img_frame, to_string(j), Point(left + 20, top + 20),
+				FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2);
+		}
+
+		//j가 1일때 관심영역 설정해서 확인해봐야됨
+		//1번을 관심영역으로 설정한뒤
+		//나머지 애들 시작좌표 체크(sort)로 사다리꼴 만든뒤 원근왜곡보정
+		//->그후 다시 돌려서 DB에 저장
+
+		
+
+
+		//imshow("이진화 영상", img_mask1);
+		imshow("원본 영상", img_frame);
+
+
+		if (waitKey(5) >= 0)
+			break;
+	}
+}
+
+
+
 int main()
 {
+	Mat img_frame;
+	img_frame = imread("A.png", IMREAD_COLOR);
 
+
+	/*
 	VideoCapture capture(0);
 	if (!capture.isOpened()) {
 		cout << "카메라가 연결되지 않았습니다." << endl;
 		exit(1);
 	}
 
+	*/
+	CheckBackGround();
+
 	for (;;) {
+		/*
 		Range r1(100, 300), r2(200, 300);
 		Mat frame, tm, gau_img, Gx, Gy, direct, sobel, max_sobel, hy_img, canny;
-		capture.read(frame);
-		imwrite("1111.jpg", frame);
+
+		
+		Mat image;
+		image = imread("A.png", IMREAD_COLOR);
+		if (image.empty())
+		{
+			cout << "Could not open or find the image" << endl;
+			return -1;
+		}
+
+		namedWindow("Original", WINDOW_AUTOSIZE);
+		imshow("Original", image);
+		*/
+
+
+
+		//capture.read(frame);
+		//imwrite("1111.jpg", frame);
 		//웹서버에 jpg파일 전송
 		Sleep(1000);
 		/*
