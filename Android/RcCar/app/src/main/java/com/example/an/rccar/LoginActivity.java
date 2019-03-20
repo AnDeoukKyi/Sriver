@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,8 +67,12 @@ public class LoginActivity extends Activity {
     int pariedDeviceCount;
 
 
-    @Override
 
+    boolean up = false;
+    boolean down = false;
+    boolean left = false;
+    boolean right = false;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -75,78 +80,119 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-        buttonSend = (Button)findViewById(R.id.button_send);
-        editTextSend = (EditText)findViewById(R.id.editText_send);
-        textViewReceive = (TextView)findViewById(R.id.textView_receive);
+        final Button btn_up = (Button)findViewById(R.id.btn_up);
+        final Button btn_down = (Button)findViewById(R.id.btn_down);
+        final Button btn_stop = (Button)findViewById(R.id.btn_stop);
+        final Button btn_right = (Button)findViewById(R.id.btn_right);
+        final Button btn_left = (Button)findViewById(R.id.btn_left);
 
-        Button btn_1=(Button)findViewById(R.id.btn_1);
-        Button btn_2=(Button)findViewById(R.id.btn_2);
-        Button btn_3=(Button)findViewById(R.id.btn_3);
-        Button btn_4=(Button)findViewById(R.id.btn_4);
-        Button btn_5=(Button)findViewById(R.id.btn_5);
-        Button btn_6=(Button)findViewById(R.id.btn_6);
-        Button btn_7=(Button)findViewById(R.id.btn_7);
 
-        btn_1.setOnClickListener(new OnClickListener() {
+
+        btn_stop.setBackgroundColor(Color.YELLOW);//맨처음 Default 정지 노란색
+
+        btn_up.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendData(Integer.toString(1));
+                up = true;
+                down = false;
+                btn_up.setBackgroundColor(Color.YELLOW);
+                btn_down.setBackgroundColor(Color.RED);
+                btn_stop.setBackgroundColor(Color.RED);
+                if(left)
+                    sendData(Integer.toString(1));//좌직진
+                else if(right)
+                    sendData(Integer.toString(3));//우직진
+                else
+                    sendData(Integer.toString(2));//직진
             }
         });
-        btn_2.setOnClickListener(new OnClickListener() {
+        btn_down.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendData(Integer.toString(2));
+                up = false;
+                down = true;
+                btn_up.setBackgroundColor(Color.RED);
+                btn_down.setBackgroundColor(Color.YELLOW);
+                btn_stop.setBackgroundColor(Color.RED);
+                if(left)
+                    sendData(Integer.toString(5));//좌후진
+                else if(right)
+                    sendData(Integer.toString(7));//우후진
+                else
+                    sendData(Integer.toString(6));//직진
             }
         });
-        btn_3.setOnClickListener(new OnClickListener() {
+        btn_stop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendData(Integer.toString(3));
-            }
-        });
-        btn_4.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+                btn_up.setBackgroundColor(Color.RED);
+                btn_down.setBackgroundColor(Color.RED);
+                btn_stop.setBackgroundColor(Color.YELLOW);
+                btn_right.setBackgroundColor(Color.RED);
+                btn_left.setBackgroundColor(Color.RED);
+                left = false;
+                right = false;
+                up = false;
+                down = false;
                 sendData(Integer.toString(4));
             }
         });
-        btn_5.setOnClickListener(new OnClickListener() {
+        btn_right.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendData(Integer.toString(5));
+
+                btn_left.setBackgroundColor(Color.RED);
+                btn_stop.setBackgroundColor(Color.RED);
+                if(right) {
+
+                    right = false;
+                    btn_right.setBackgroundColor(Color.RED);
+                    if (up)
+                        sendData(Integer.toString(2));
+                    else if (down)
+                        sendData(Integer.toString(6));
+                }
+                else {
+                    right = true;
+                    btn_right.setBackgroundColor(Color.YELLOW);
+                    if (up)
+                        sendData(Integer.toString(3));
+                    else if (down)
+                        sendData(Integer.toString(7));
+                }
+                left = false;
             }
         });
-        btn_6.setOnClickListener(new OnClickListener() {
+        btn_left.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendData(Integer.toString(6));
+                btn_right.setBackgroundColor(Color.RED);
+
+                btn_stop.setBackgroundColor(Color.RED);
+                if(left)
+                {
+                    left = false;
+                    btn_left.setBackgroundColor(Color.RED);
+                    if (up)
+                        sendData(Integer.toString(2));
+                    else if (down)
+                        sendData(Integer.toString(6));
+                }
+                else {
+
+                    left = true;
+                    btn_left.setBackgroundColor(Color.YELLOW);
+                    if (up)
+                        sendData(Integer.toString(1));
+                    else if (down)
+                        sendData(Integer.toString(5));
+                }
+                right = false;
             }
         });
-        btn_7.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendData(Integer.toString(7));
-            }
-        });
 
 
-
-
-        buttonSend.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendData(editTextSend.getText().toString());
-            }
-        });
-
-        // 각 컨테이너들의 id를 매인 xml과 맞춰준다.
-
-        textViewReceive = (TextView)findViewById(R.id.textView_receive);
-
-        editTextSend = (EditText)findViewById(R.id.editText_send);
-
-        buttonSend = (Button)findViewById(R.id.button_send);
 
 
 
