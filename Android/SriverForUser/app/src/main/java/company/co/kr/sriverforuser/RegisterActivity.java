@@ -112,9 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String userPassword = passwordText.getText().toString();
                 String userEmail = emailText.getText().toString();
                 String userCar = carnumberText.getText().toString();
-                String userGender = genderGroup
 
-                if(validate)
+
+                if(!validate)
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("ID 중복체크를 해주세요.")
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                             else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("회원 등록에 실패했습니다..")
+                                dialog = builder.setMessage("회원 등록에 실패했습니다.")
                                         .setNegativeButton("확인",null)
                                         .create();
                                 dialog.show();
@@ -166,6 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
     @Override
+
     protected void onStop() {
         super.onStop();
         if(dialog != null)

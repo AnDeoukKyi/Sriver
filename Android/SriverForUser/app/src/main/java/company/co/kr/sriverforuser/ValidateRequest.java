@@ -14,7 +14,7 @@ public class ValidateRequest extends StringRequest {
     public ValidateRequest(String userID, Response.Listener<String> listener) {
         super(Method.POST,URL, listener,null);
         parameters = new HashMap<>();
-        parameters.put("userID", userID);
+        parameters.put("ID", userID);
     }
 
     @Override
