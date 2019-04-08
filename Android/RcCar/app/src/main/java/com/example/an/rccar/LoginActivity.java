@@ -93,33 +93,25 @@ public class LoginActivity extends Activity {
         btn_up.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                up = true;
-                down = false;
+
                 btn_up.setBackgroundColor(Color.YELLOW);
                 btn_down.setBackgroundColor(Color.RED);
                 btn_stop.setBackgroundColor(Color.RED);
-                if(left)
-                    sendData(Integer.toString(1));//좌직진
-                else if(right)
-                    sendData(Integer.toString(3));//우직진
-                else
-                    sendData(Integer.toString(2));//직진
+                btn_right.setBackgroundColor(Color.RED);
+                btn_left.setBackgroundColor(Color.RED);
+
+                sendData(Integer.toString(2));
             }
         });
         btn_down.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                up = false;
-                down = true;
                 btn_up.setBackgroundColor(Color.RED);
                 btn_down.setBackgroundColor(Color.YELLOW);
                 btn_stop.setBackgroundColor(Color.RED);
-                if(left)
-                    sendData(Integer.toString(5));//좌후진
-                else if(right)
-                    sendData(Integer.toString(7));//우후진
-                else
-                    sendData(Integer.toString(6));//직진
+                btn_right.setBackgroundColor(Color.RED);
+                btn_left.setBackgroundColor(Color.RED);
+                sendData(Integer.toString(5));
             }
         });
         btn_stop.setOnClickListener(new OnClickListener() {
@@ -131,10 +123,6 @@ public class LoginActivity extends Activity {
                 btn_stop.setBackgroundColor(Color.YELLOW);
                 btn_right.setBackgroundColor(Color.RED);
                 btn_left.setBackgroundColor(Color.RED);
-                left = false;
-                right = false;
-                up = false;
-                down = false;
                 sendData(Integer.toString(4));
             }
         });
@@ -142,56 +130,25 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                btn_left.setBackgroundColor(Color.RED);
+                btn_up.setBackgroundColor(Color.RED);
+                btn_down.setBackgroundColor(Color.RED);
                 btn_stop.setBackgroundColor(Color.RED);
-                if(right) {
-
-                    right = false;
-                    btn_right.setBackgroundColor(Color.RED);
-                    if (up)
-                        sendData(Integer.toString(2));
-                    else if (down)
-                        sendData(Integer.toString(6));
-                }
-                else {
-                    right = true;
-                    btn_right.setBackgroundColor(Color.YELLOW);
-                    if (up)
-                        sendData(Integer.toString(3));
-                    else if (down)
-                        sendData(Integer.toString(7));
-                }
-                left = false;
+                btn_right.setBackgroundColor(Color.YELLOW);
+                btn_left.setBackgroundColor(Color.RED);
+                sendData(Integer.toString(3));
             }
         });
         btn_left.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_right.setBackgroundColor(Color.RED);
-
+                btn_up.setBackgroundColor(Color.RED);
+                btn_down.setBackgroundColor(Color.RED);
                 btn_stop.setBackgroundColor(Color.RED);
-                if(left)
-                {
-                    left = false;
-                    btn_left.setBackgroundColor(Color.RED);
-                    if (up)
-                        sendData(Integer.toString(2));
-                    else if (down)
-                        sendData(Integer.toString(6));
-                }
-                else {
-
-                    left = true;
-                    btn_left.setBackgroundColor(Color.YELLOW);
-                    if (up)
-                        sendData(Integer.toString(1));
-                    else if (down)
-                        sendData(Integer.toString(5));
-                }
-                right = false;
+                btn_right.setBackgroundColor(Color.RED);
+                btn_left.setBackgroundColor(Color.YELLOW);
+                sendData(Integer.toString(1));
             }
         });
-
 
 
 

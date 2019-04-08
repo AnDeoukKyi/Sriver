@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-/*
+
 
         Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(loginIntent);
             }
         });
-*/
+
 
 
         TextView registerButton = (TextView) findViewById(R.id.registerButton);
@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText idText = (EditText) findViewById(R.id.idText);
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
-        final Button loginButton = (Button) findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
