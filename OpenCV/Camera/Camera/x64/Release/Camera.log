@@ -1,8 +1,7 @@
-﻿  camera.cpp
-  코드를 생성하고 있습니다.
-  13 of 63 functions (20.6%) were compiled, the rest were copied from previous compilation.
+﻿  코드를 생성하고 있습니다.
+  40 of 225 functions (17.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   Camera.vcxproj -> C:\Users\nejoo\Documents\GitHub\Sriver\OpenCV\Camera\x64\Release\Camera.exe
   Camera.vcxproj -> C:\Users\nejoo\Documents\GitHub\Sriver\OpenCV\Camera\x64\Release\Camera.pdb (Full PDB)
