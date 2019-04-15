@@ -54,14 +54,14 @@
                     android:drawableStart="@drawable/ic_person_black_24dp"
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/colorTextBackground"
                     />
                 <Button
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:textSize="13dp"
                     android:textStyle="bold"
-                    android:background="@color/colorWarning"
+                    android:background="@color/colorPrimary"
                     android:text="DUPLICATE"
                     android:layout_gravity="center"
                     android:id="@+id/validateButton"
@@ -82,7 +82,7 @@
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:drawableLeft="@drawable/ic_lock_black_24dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorTextBackground"
                 />
 
             <EditText
@@ -97,7 +97,7 @@
                 android:drawableStart="@drawable/ic_mail_outline_black_24dp"
                 android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorTextBackground"
                 />
 
             <EditText
@@ -112,7 +112,7 @@
                 android:drawableStart="@drawable/ic_directions_car_black_24dp"
                 android:drawableLeft="@drawable/ic_directions_car_black_24dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorTextBackground"
                 />
 
             <RadioGroup
