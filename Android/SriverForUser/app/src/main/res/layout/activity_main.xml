@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:id="@+id/layout_Main"
-    android:background="#ffffff">
+    android:background="#00ff00">
 
 
 </RelativeLayout>

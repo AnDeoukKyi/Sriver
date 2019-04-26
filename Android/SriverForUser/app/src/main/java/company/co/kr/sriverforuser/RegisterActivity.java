@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userID = idText.getText().toString();
+                final String userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
                 String userEmail = emailText.getText().toString();
                 String userCar = carnumberText.getText().toString();
@@ -132,6 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -139,12 +141,9 @@ public class RegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success){
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("회원 등록에 성공했습니다.")
-                                        .setPositiveButton("확인",null)
-                                        .create();
-                                dialog.show();
-                                finish();
+                                RegisterPointRequest registerPointRequest = new RegisterPointRequest(userID, responsePointListener);
+                                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                                queue.add(registerPointRequest);
                             }
                             else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -158,6 +157,33 @@ public class RegisterActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    Response.Listener<String> responsePointListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try{
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
+                                if (success){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                    dialog = builder.setMessage("회원 등록에 성공했습니다.")
+                                            .setPositiveButton("확인",null)
+                                            .create();
+                                    dialog.show();
+                                    finish();
+                                }
+                                else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                    dialog = builder.setMessage("회원 등록에 실패했습니다.")
+                                            .setNegativeButton("확인",null)
+                                            .create();
+                                    dialog.show();
+                                }
+                            }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
                 };
                 RegisterRequest registerRequest = new RegisterRequest(userID, userPassword, userEmail, userCar, userGender, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);

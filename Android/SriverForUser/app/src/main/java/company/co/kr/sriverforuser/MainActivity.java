@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         parkingPoint = new ArrayList<>();
-        new BackgroundTask().execute();
+        new ParkingPointLoad().execute();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    class ParkingPointLoad extends AsyncTask<Void, Void, String> {
 
 
         String target;
@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 return stringBuilder.toString().trim();
-
             }
             catch(Exception e){
                 e.printStackTrace();
