@@ -8,260 +8,159 @@
 using namespace cv;
 using namespace std;
 
-Mat img_frame;                                    // 원본 img
-Mat img_mask1;                                    // 모폴로지 전 img
-Mat *rgb;                                       // rgb 값 출력용 변수
-int px;                                          // 마우스 클릭시 x좌표
-int py;                                          // 마우스 클릭시 y좌표
-CvMemStorage* storage = cvCreateMemStorage(0);            // 윤곽선 검출
-CvSeq* contours = 0;                              // 윤곽선 정보
-CvPoint corner[4];                                 // 라벨링 꼭지점 추출용 변수
+Mat img_frame;			//원본 img
+Mat lines;
 
-int cas = 0;
-
-void calc_direct(Mat Gy, Mat Gx, Mat& direct)            // 캐니엣지
+void hough_coord(Mat img_frame, Mat& acc_mat, double rho, double theta)		// 누적 행렬
 {
-	direct.create(Gy.size(), CV_8U);
+	cout << 1 << endl;
+	int acc_h = (img_frame.rows + img_frame.cols) * 2 / rho;			// 누적 행렬 높이
+	int	acc_w = CV_PI / theta;											// 누적 행렬 너비
+	acc_mat = Mat(acc_h, acc_w, CV_32S, Scalar(0));						// 허프 누적 행렬
 
-	for (int i = 0; i < direct.rows; i++) {
-		for (int j = 0; j < direct.cols; j++) {
-			float gx = Gx.at<float>(i, j);
-			float gy = Gy.at<float>(i, j);
-			int theat = int(fastAtan2(gy, gx) / 45);
-			direct.at<uchar>(i, j) = theat % 4;
-		}
-	}
-}
-
-void supp_nonMax(Mat sobel, Mat  direct, Mat& dst)         // 비최대값 억제
-{
-	dst = Mat(sobel.size(), CV_32F, Scalar(0));
-
-	for (int i = 1; i < sobel.rows - 1; i++) {
-		for (int j = 1; j < sobel.cols - 1; j++)
-		{
-			int   dir = direct.at<uchar>(i, j);             // 기울기 값
-			float v1, v2;
-			if (dir == 0) {         // 기울기 방향 0도 방향
-				v1 = sobel.at<float>(i, j - 1);
-				v2 = sobel.at<float>(i, j + 1);
-			}
-			else if (dir == 1) {      // 기울기 방향 45도
-				v1 = sobel.at<float>(i + 1, j + 1);
-				v2 = sobel.at<float>(i - 1, j - 1);
-			}
-			else if (dir == 2) {      // 기울기 방향 90도
-				v1 = sobel.at<float>(i - 1, j);
-				v2 = sobel.at<float>(i + 1, j);
-			}
-			else if (dir == 3) {      // 기울기 방향 135도
-				v1 = sobel.at<float>(i + 1, j - 1);
-				v2 = sobel.at<float>(i - 1, j + 1);
-			}
-
-			float center = sobel.at<float>(i, j);
-			dst.at<float>(i, j) = (center > v1 && center > v2) ? center : 0;
-		}
-	}
-}
-
-void trace(Mat max_so, Mat& pos_ck, Mat& hy_img, Point pt, int low)
-{
-	Rect rect(Point(0, 0), pos_ck.size());
-	if (!rect.contains(pt)) return;         // 추적화소의 영상 범위 확인 
-
-	if (pos_ck.at<uchar>(pt) == 0 && max_so.at<float>(pt) > low)
+	for (int y = 0; y < img_frame.rows; y++)							// 입력 화소 조회
 	{
-		pos_ck.at<uchar>(pt) = 1;         // 추적 완료 좌표
-		hy_img.at<uchar>(pt) = 255;         // 에지 지정
-
-											// 추적 재귀 함수
-		trace(max_so, pos_ck, hy_img, pt + Point(-1, -1), low);
-		trace(max_so, pos_ck, hy_img, pt + Point(0, -1), low);
-		trace(max_so, pos_ck, hy_img, pt + Point(+1, -1), low);
-		trace(max_so, pos_ck, hy_img, pt + Point(-1, 0), low);
-
-		trace(max_so, pos_ck, hy_img, pt + Point(+1, 0), low);
-		trace(max_so, pos_ck, hy_img, pt + Point(-1, +1), low);
-		trace(max_so, pos_ck, hy_img, pt + Point(0, +1), low);
-		trace(max_so, pos_ck, hy_img, pt + Point(+1, +1), low);
-	}
-}
-
-void  hysteresis_th(Mat max_so, Mat&  hy_img, int low, int high)
-{
-	Mat pos_ck(max_so.size(), CV_8U, Scalar(0));
-	hy_img = Mat(max_so.size(), CV_8U, Scalar(0));
-
-	for (int i = 0; i < max_so.rows; i++) {
-		for (int j = 0; j < max_so.cols; j++)
+		for (int x = 0; x < img_frame.cols; x++)
 		{
-			if (max_so.at<float>(i, j) > high)
-				trace(max_so, pos_ck, hy_img, Point(j, i), low);
-		}
-	}
-}
-
-void CheckBackGround() {
-	int range_count = 0;
-
-	// 내가 원하는 색깔 선택
-	Scalar red(0, 0, 255);
-	cout << "(" << px << ", " << py << " ): " << (int)(*rgb).at<Vec3b>(py, px)[0];   // blue
-	cout << " " << (int)(*rgb).at<Vec3b>(py, px)[1];                          // green
-	cout << " " << (int)(*rgb).at<Vec3b>(py, px)[2] << std::endl;                // red
-	Scalar green((int)(*rgb).at<Vec3b>(py, px)[0], (int)(*rgb).at<Vec3b>(py, px)[1], (int)(*rgb).at<Vec3b>(py, px)[2]);
-	Scalar blue(255, 0, 0);
-	Scalar yellow(0, 255, 255);
-	Scalar magenta(255, 0, 255);
-
-	Mat rgb_color = Mat(1, 1, CV_8UC3, green);            // 1,1짜리 행렬로 생성(dot)
-	Mat hsv_color;
-
-	cvtColor(rgb_color, hsv_color, COLOR_BGR2HSV);         // BRG->HSV로 변환
-
-	int hue = (int)hsv_color.at<Vec3b>(0, 0)[0];         // 색조
-	int saturation = (int)hsv_color.at<Vec3b>(0, 0)[1];      // 채도
-	int value = (int)hsv_color.at<Vec3b>(0, 0)[2];         // 명도
-
-	cout << endl;
-	cout << "hue = " << hue << endl;
-	cout << "saturation = " << saturation << endl;
-	cout << "value = " << value << endl;
-
-	int low_hue = hue - 10;
-	int high_hue = hue + 6;
-
-	int low_hue1 = 0, low_hue2 = 0;
-	int high_hue1 = 0, high_hue2 = 0;
-
-	if (low_hue < 10) {
-		range_count = 2;
-
-		high_hue1 = 180;
-		low_hue1 = low_hue + 180;
-		high_hue2 = high_hue;
-		low_hue2 = 0;
-	}
-	else if (high_hue > 170) {
-		range_count = 2;
-
-		high_hue1 = low_hue;
-		low_hue1 = 180;
-		high_hue2 = high_hue - 180;
-		low_hue2 = 0;
-	}
-	else {
-		range_count = 1;
-
-		low_hue1 = low_hue;
-		high_hue1 = high_hue;
-	}
-
-	cout << low_hue1 << "  " << high_hue1 << endl;
-	cout << low_hue2 << "  " << high_hue2 << endl;
-
-	//VideoCapture cap("A.png");
-	Mat img_frame, img_hsv;
-
-	for (;;)
-	{
-		img_frame = imread("A.jpg", IMREAD_COLOR);
-
-		// 사진이 열리지 않을 시
-		if (img_frame.empty()) {
-			cerr << "에러! 사진이 열리지 않았습니다.\n";
-			break;
-		}
-
-		// HSV로 변환
-		cvtColor(img_frame, img_hsv, COLOR_BGR2HSV);//BRG->HSV로 변환
-
-													// 지정한 HSV 범위를 이용하여 영상을 이진화
-		inRange(img_hsv, Scalar(low_hue1, 20, 50), Scalar(high_hue1, 255, 255), img_mask1);
-		imshow("모폴로지 전", img_mask1);
-
-		// 라벨링 
-		Mat img_labels, stats, centroids;
-		int numOfLables = connectedComponentsWithStats(img_mask1, img_labels,
-			stats, centroids, 8, CV_32S);
-
-		//영역박스 그리기
-		int max = -1, idx = 0;
-		for (int j = 1; j < numOfLables; j++) {
-			int area = stats.at<int>(j, CC_STAT_AREA);
-			int left = stats.at<int>(j, CC_STAT_LEFT);
-			int top = stats.at<int>(j, CC_STAT_TOP);
-			int width = stats.at<int>(j, CC_STAT_WIDTH);
-			int height = stats.at<int>(j, CC_STAT_HEIGHT);
-
-			if (max < area)
+			Point pt(x, y);												// 조회 좌표
+			if (img_frame.at<uchar>(pt) > 0)							// 직선 여부 검사
 			{
-				max = area;
-				idx = j;
-				rectangle(img_frame, Point(left, top), Point(left + width, top + height),
-					Scalar(0, 0, 255), 3);
+				for (int t = 0; t < acc_w; t++)							// 0~180도 반복
+				{
+					double radian = t * theta;
+					float r = pt.x * cos(radian) + pt.y * sin(radian);
+					r = cvRound(r / rho + acc_mat.rows / 2);
+					acc_mat.at<int>(r, t)++;							// (p, 세타> 좌표에 누적
+				}
 			}
-
-
-			rectangle(img_frame, Point(left, top), Point(left + width, top + height),
-				Scalar(0, 0, 255), 1);
-
-			putText(img_frame, to_string(j), Point(left + 20, top + 20),
-				FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2);
 		}
-
-		// 초기 위치 설정
-		CvPoint *st = (CvPoint *)cvGetSeqElem(contours, 0);
-
-		// 첫번째 꼭지점 추출(최대 거리를 가지는 점 선택)
-		double fMaxDist = 0.0;
-
-		for (int x = 1; x < numOfLables; x++)
-		{
-			CvPoint* pt = (CvPoint *)cvGetSeqElem(contours, x);
-		}
-
-
-
-		//imshow("이진화 영상", img_mask1);
-		imshow("원본 영상", img_frame);
-		if (waitKey(5) >= 0)
-			break;
-		cas = 2;
 	}
+	cout << 1 << endl;
 }
 
-// RGB 값 출력
-void mouseEventRGB(int event, int x, int y, int flags, void *param)
+void acc_mask(Mat acc_mat, Mat& acc_dst, Size size, int thresh)			// 지역 최대값
 {
-	rgb = (Mat*)param;
-	if (event == CV_EVENT_LBUTTONDOWN)
+	cout << 2 << endl;
+	acc_dst = Mat(acc_mat.size(), CV_32S, Scalar(0));
+	Point h_m = size / 2;												// 마스크 크기 절반
+
+	for (int r = h_m.y; r < acc_mat.rows - h_m.y; r++)					// 누적 행렬 조회
 	{
-		cas = 1;
-		cout << "(" << x << ", " << y << " ): " << (int)(*rgb).at<Vec3b>(y, x)[0];   // blue
-		cout << " " << (int)(*rgb).at<Vec3b>(y, x)[1];                          // green
-		cout << " " << (int)(*rgb).at<Vec3b>(y, x)[2] << std::endl;                // red
-		px = x;
-		py = y;
+		for (int t = h_m.x; t < acc_mat.cols - h_m.x; t++)
+		{
+			Point center = Point(t, r) - h_m;
+			int c_value = acc_mat.at<int>(center);						// 중심화소
+			if (c_value >= thresh)
+			{
+				double maxVal = 0;
+				for (int u = 0; u < size.height; u++)					// 마스크 범위 조회				
+				{
+					for (int v = 0; v < size.width; v++)
+					{
+						Point start = center + Point(v, u);
+						if (start != center && acc_mat.at<int>(start) > maxVal)
+							maxVal = acc_mat.at<int>(start);
+					}
+				}
+
+				Rect rect(center, size);
+				if (c_value >= maxVal)									// 중심화소가 최대값이면
+				{
+					acc_dst.at<int>(center) = c_value;					// 반환 행렬에 중심화소값 저장
+					acc_mat(rect).setTo(0);
+				}
+			}
+		}
 	}
+	cout << 2 << endl;
+}
+
+void sort_lines(Mat lines, vector<Vec2f>& s_lines)		// 직선 정렬
+{
+	cout << 3 << endl;
+	Mat acc = lines.col(2), idx;										// 누적값
+	sortIdx(acc, idx, SORT_EVERY_COLUMN + SORT_DESCENDING);
+
+	for (int i = 0; i < idx.rows; i++)
+	{
+		int id = idx.at<int>(i);										// 정렬 원소에 대한 원본 인덱스
+		float rho = lines.at<float>(id, 0);								// 0번 열 - 수직거리
+		float radian = lines.at<float>(id, 1);							// 1번 열 - 각도
+		s_lines.push_back(Vec2f(rho, radian));
+	}
+	cout << 3 << endl;
+}
+
+void thres_lines(Mat acc_dst, Mat& lines, double _rho, double theta, int thresh)
+{
+	cout << 4 << endl;
+	for (int r = 0; r < acc_dst.rows; r++)
+	{
+		for (int t = 0; t < acc_dst.cols; t++)
+		{
+			float value = (float)acc_dst.at<int>(r, t);
+			if (value >= thresh)
+			{
+				float rho = (float)((r - acc_dst.rows / 2) * _rho);		// 수직거리
+				float radian = (float)(t*theta);						// 각도
+
+				Matx13f line(rho, radian, value);						// 단일 직선
+				lines.push_back((Mat)line);								// lines 행렬에 직선 저장
+			}
+		}
+	}
+	cout << 4 << endl;
+}
+
+void houghLines(Mat src, vector<Vec2f>& s_lines, double rho, double theta, int thresh)
+{
+	cout << 5 << endl;
+	Mat acc_mat, acc_dst;
+	hough_coord(src, acc_mat, rho, theta);								// 허프 누적 행렬 계산
+	acc_mask(acc_mat, acc_dst, Size(3, 7), thresh);						// 마스킹 처리
+
+	thres_lines(acc_dst, lines, rho, theta, thresh);					// 직선 가져옴
+	sort_lines(lines, s_lines);											// 누적값에 따른 직선 정렬
+	cout << 5 << endl;
+}
+
+void draw_houghLines(Mat src, Mat& dst, vector<Vec2f> lines, int nline)
+{
+	cout << 6 << endl;
+	cvtColor(src, dst, CV_GRAY2BGR);									// 컬러 영상 변환
+	for (size_t i = 0; i < min((int)lines.size(), nline); i++)			// 검출 직선개수 반복
+	{
+		float rho = lines[i][0], theta = lines[i][1];					// 수직거리, 각도
+		double a = cos(theta), b = sin(theta);
+		Point2d pt(a * rho, b * rho);									// 검출 직선상의 한 좌표 계산
+		Point2d delta(1000 * -b, 1000 * a);								// 직선상의 이동 위치
+		line(dst, pt + delta, pt - delta, Scalar(0, 255, 0), 1, LINE_AA);
+	}
+	cout << 6 << endl;
 }
 
 int main()
 {
+
 	img_frame = imread("A.jpg", IMREAD_COLOR);
 	CV_Assert(img_frame.data);
 
-	imshow("img_frame", img_frame);                           // BGR값 출력시 사용
-	setMouseCallback("img_frame", mouseEventRGB, (&img_frame));      // BGR값 출력용 마우스 이벤트
+	double rho = 1, theta = CV_PI / 180;								// 거리간격, 각도간격
+	Mat canny, dst1, dst2;
+	GaussianBlur(img_frame, canny, Size(5, 5), 2, 2);					// 가우시안 블러링
+	Canny(canny, canny, 30, 150, 3);									// 캐니 에지 검출
+	cout << 7 << endl;
 
-	for (;;)
-	{
-		if (cas == 1)
-			CheckBackGround();                              // 모폴로지 + 라벨링 함
-		if (waitKey(30) >= 0) continue;
-	}
 
+	vector<Vec2f> lines1, lines2;
+	houghLines(canny, lines1, rho, theta, 50);							// 직접 구현 함수
+	HoughLines(canny, lines2, rho, theta, 50);							// OpenCV 제공함수
+	draw_houghLines(canny, dst1, lines1, 10);							// 검출 직선 그리기
+	draw_houghLines(canny, dst2, lines2, 10);
+
+	imshow("source", img_frame);
+	imshow("canny", canny);
+	imshow("detected lines", dst1);
+	imshow("detected OpenCV_lines", dst2);
 	waitKey(0);
-	return 0;
 }
