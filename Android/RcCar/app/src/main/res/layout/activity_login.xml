@@ -6,74 +6,82 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#ffffff"
+    android:padding="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
-        <Button
+        <ImageButton
             android:id="@+id/btn_up"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_up"
-            android:background="#ff0000"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_noclick"
+            />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1">
-        <Button
+        <ImageButton
             android:id="@+id/btn_left"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_left"
-            android:background="#ff0000"/>
-        <Button
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_noclick"/>
+        <ImageButton
             android:id="@+id/btn_stop"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_stop"
-            android:background="#ff0000"/>
-        <Button
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_noclick"/>
+        <ImageButton
             android:id="@+id/btn_right"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_right"
-            android:background="#ff0000"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_noclick"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
-        <Button
+        <ImageButton
             android:id="@+id/btn_down"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_down"
-            android:background="#ff0000"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_noclick"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 

@@ -22,12 +22,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -80,11 +82,11 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-        final Button btn_up = (Button)findViewById(R.id.btn_up);
-        final Button btn_down = (Button)findViewById(R.id.btn_down);
-        final Button btn_stop = (Button)findViewById(R.id.btn_stop);
-        final Button btn_right = (Button)findViewById(R.id.btn_right);
-        final Button btn_left = (Button)findViewById(R.id.btn_left);
+        final ImageButton btn_up = (ImageButton)findViewById(R.id.btn_up);
+        final ImageButton btn_down = (ImageButton)findViewById(R.id.btn_down);
+        final ImageButton btn_stop = (ImageButton)findViewById(R.id.btn_stop);
+        final ImageButton btn_right = (ImageButton)findViewById(R.id.btn_right);
+        final ImageButton btn_left = (ImageButton)findViewById(R.id.btn_left);
 
 
 
@@ -94,11 +96,11 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                btn_up.setBackgroundColor(Color.YELLOW);
-                btn_down.setBackgroundColor(Color.RED);
-                btn_stop.setBackgroundColor(Color.RED);
-                btn_right.setBackgroundColor(Color.RED);
-                btn_left.setBackgroundColor(Color.RED);
+                btn_up.setBackgroundColor(R.drawable.btn_click);
+                btn_down.setBackgroundColor(R.drawable.btn_noclick);
+                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
+                btn_right.setBackgroundColor(R.drawable.btn_noclick);
+                btn_left.setBackgroundColor(R.drawable.btn_noclick);
 
                 sendData(Integer.toString(2));
             }
@@ -106,11 +108,11 @@ public class LoginActivity extends Activity {
         btn_down.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_up.setBackgroundColor(Color.RED);
-                btn_down.setBackgroundColor(Color.YELLOW);
-                btn_stop.setBackgroundColor(Color.RED);
-                btn_right.setBackgroundColor(Color.RED);
-                btn_left.setBackgroundColor(Color.RED);
+                btn_up.setBackgroundColor(R.drawable.btn_noclick);
+                btn_down.setBackgroundColor(R.drawable.btn_click);
+                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
+                btn_right.setBackgroundColor(R.drawable.btn_noclick);
+                btn_left.setBackgroundColor(R.drawable.btn_noclick);
                 sendData(Integer.toString(5));
             }
         });
@@ -118,11 +120,11 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                btn_up.setBackgroundColor(Color.RED);
-                btn_down.setBackgroundColor(Color.RED);
-                btn_stop.setBackgroundColor(Color.YELLOW);
-                btn_right.setBackgroundColor(Color.RED);
-                btn_left.setBackgroundColor(Color.RED);
+                btn_up.setBackgroundColor(R.drawable.btn_noclick);
+                btn_down.setBackgroundColor(R.drawable.btn_noclick);
+                btn_stop.setBackgroundColor(R.drawable.btn_click);
+                btn_right.setBackgroundColor(R.drawable.btn_noclick);
+                btn_left.setBackgroundColor(R.drawable.btn_noclick);
                 sendData(Integer.toString(4));
             }
         });
@@ -130,22 +132,22 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                btn_up.setBackgroundColor(Color.RED);
-                btn_down.setBackgroundColor(Color.RED);
-                btn_stop.setBackgroundColor(Color.RED);
-                btn_right.setBackgroundColor(Color.YELLOW);
-                btn_left.setBackgroundColor(Color.RED);
+                btn_up.setBackgroundColor(R.drawable.btn_noclick);
+                btn_down.setBackgroundColor(R.drawable.btn_noclick);
+                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
+                btn_right.setBackgroundColor(R.drawable.btn_click);
+                btn_left.setBackgroundColor(R.drawable.btn_noclick);
                 sendData(Integer.toString(3));
             }
         });
         btn_left.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_up.setBackgroundColor(Color.RED);
-                btn_down.setBackgroundColor(Color.RED);
-                btn_stop.setBackgroundColor(Color.RED);
-                btn_right.setBackgroundColor(Color.RED);
-                btn_left.setBackgroundColor(Color.YELLOW);
+                btn_up.setBackgroundColor(R.drawable.btn_noclick);
+                btn_down.setBackgroundColor(R.drawable.btn_noclick);
+                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
+                btn_right.setBackgroundColor(R.drawable.btn_noclick);
+                btn_left.setBackgroundColor(R.drawable.btn_click);
                 sendData(Integer.toString(1));
             }
         });
