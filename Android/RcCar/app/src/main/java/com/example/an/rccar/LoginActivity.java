@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -69,18 +70,14 @@ public class LoginActivity extends Activity {
     int pariedDeviceCount;
 
 
-
-    boolean up = false;
-    boolean down = false;
-    boolean left = false;
-    boolean right = false;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
+        context = this;
 
         final ImageButton btn_up = (ImageButton)findViewById(R.id.btn_up);
         final ImageButton btn_down = (ImageButton)findViewById(R.id.btn_down);
@@ -90,17 +87,17 @@ public class LoginActivity extends Activity {
 
 
 
-        btn_stop.setBackgroundColor(Color.YELLOW);//맨처음 Default 정지 노란색
+        btn_stop.setBackground(ContextCompat.getDrawable(this,R.drawable.btn_click));//맨처음 Default
 
         btn_up.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                btn_up.setBackgroundColor(R.drawable.btn_click);
-                btn_down.setBackgroundColor(R.drawable.btn_noclick);
-                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
-                btn_right.setBackgroundColor(R.drawable.btn_noclick);
-                btn_left.setBackgroundColor(R.drawable.btn_noclick);
+                btn_up.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_click));
+                btn_down.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_stop.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_right.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_left.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
 
                 sendData(Integer.toString(2));
             }
@@ -108,11 +105,11 @@ public class LoginActivity extends Activity {
         btn_down.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_up.setBackgroundColor(R.drawable.btn_noclick);
-                btn_down.setBackgroundColor(R.drawable.btn_click);
-                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
-                btn_right.setBackgroundColor(R.drawable.btn_noclick);
-                btn_left.setBackgroundColor(R.drawable.btn_noclick);
+                btn_up.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_down.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_click));
+                btn_stop.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_right.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_left.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
                 sendData(Integer.toString(5));
             }
         });
@@ -120,11 +117,11 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                btn_up.setBackgroundColor(R.drawable.btn_noclick);
-                btn_down.setBackgroundColor(R.drawable.btn_noclick);
-                btn_stop.setBackgroundColor(R.drawable.btn_click);
-                btn_right.setBackgroundColor(R.drawable.btn_noclick);
-                btn_left.setBackgroundColor(R.drawable.btn_noclick);
+                btn_up.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_down.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_stop.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_click));
+                btn_right.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_left.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
                 sendData(Integer.toString(4));
             }
         });
@@ -132,22 +129,22 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                btn_up.setBackgroundColor(R.drawable.btn_noclick);
-                btn_down.setBackgroundColor(R.drawable.btn_noclick);
-                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
-                btn_right.setBackgroundColor(R.drawable.btn_click);
-                btn_left.setBackgroundColor(R.drawable.btn_noclick);
+                btn_up.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_down.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_stop.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_right.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_click));
+                btn_left.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
                 sendData(Integer.toString(3));
             }
         });
         btn_left.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_up.setBackgroundColor(R.drawable.btn_noclick);
-                btn_down.setBackgroundColor(R.drawable.btn_noclick);
-                btn_stop.setBackgroundColor(R.drawable.btn_noclick);
-                btn_right.setBackgroundColor(R.drawable.btn_noclick);
-                btn_left.setBackgroundColor(R.drawable.btn_click);
+                btn_up.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_down.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_stop.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_right.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_noclick));
+                btn_left.setBackground(ContextCompat.getDrawable(context,R.drawable.btn_click));
                 sendData(Integer.toString(1));
             }
         });
