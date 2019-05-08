@@ -11,6 +11,27 @@ using namespace std;
 Mat img_frame;			//원본 img
 Mat lines;
 
+
+void videoCapture()
+{
+	VideoCapture capture(0);
+	namedWindow("camera");
+
+	Mat video;
+
+	while (true)
+	{
+		if (waitKey(1) > 0)
+			break;
+
+		capture >> video;
+		imshow("camera", video);
+	}
+
+	destroyAllWindows();
+
+}
+
 void hough_coord(Mat img_frame, Mat& acc_mat, double rho, double theta)		// 누적 행렬
 {
 	cout << 1 << endl;
@@ -139,11 +160,14 @@ void draw_houghLines(Mat src, Mat& dst, vector<Vec2f> lines, int nline)
 	cout << 6 << endl;
 }
 
+
 int main()
 {
 
 	img_frame = imread("A.jpg", IMREAD_COLOR);
 	CV_Assert(img_frame.data);
+
+	videoCapture();
 
 	double rho = 1, theta = CV_PI / 180;								// 거리간격, 각도간격
 	Mat canny, dst1, dst2;
