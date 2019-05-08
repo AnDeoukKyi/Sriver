@@ -31,7 +31,7 @@ WSADATA wsaData;
 
 
 //함수
-void CaptureVideo();
+void RecordVideo();
 void MouseEventRGB(int event, int x, int y, int flags, void *param);
 void CheckBackGround();
 void Warp();
@@ -60,29 +60,25 @@ int InsertDB(int index, int occupy, int startX, int startY, int lenX, int lenY);
 
 int main()
 {
-	CaptureVideo();
-	
-	
-	setMouseCallback("동영상", MouseEventRGB, (&img_frame));			// BGR값 출력용 마우스 이벤트
+	RecordVideo();
+	imshow("원본", img_frame);//마우스 이벤트용 출력
+	setMouseCallback("원본", MouseEventRGB, (&img_frame));			// BGR값 출력용 마우스 이벤트
 
 	for (;;) {
 		switch (step) {
-		case 1://영상 캡쳐
-			step++;
-			break;
-		case 2://제일 큰 사각형 찾기
+		case 1://제일 큰 사각형 찾기
 			CheckBackGround();			// 모폴로지
 			step++;
 			break;
-		case 3://WrapImg저장
+		case 2://WrapImg저장
 			Warp();
 			step++;
 			break;
-		case 4://라벨링
+		case 3://라벨링
 			Labeling();
 			step++;
 			break;
-		case 5://Trace
+		case 4://Trace
 			step++;
 			break;
 		}
@@ -96,35 +92,9 @@ int main()
 
 //함수
 
-void CaptureVideo()
-{
-	
-	/*img_frame = imread("A.jpg", IMREAD_COLOR);
+void RecordVideo() {
+	img_frame = imread("A.jpg", IMREAD_COLOR);
 	CV_Assert(img_frame.data);
-	imshow("동영상", img_frame);
-	return;*/
-
-
-	VideoCapture cap(1);
-
-	while (1)
-	{
-		// 카메라로부터 캡쳐한 영상을 frame에 저장합니다.
-		cap.read(img_frame);
-		if (img_frame.empty()) {
-			cerr << "빈 영상이 캡쳐되었습니다.\n";
-			break;
-		}
-
-		// 영상을 화면에 보여줍니다. 
-		imshow("동영상", img_frame);
-
-
-		// ESC 키를 입력하면 루프가 종료됩니다. 
-
-		if (waitKey(500) >= 0)
-			break;
-	}
 }
 
 
@@ -194,39 +164,27 @@ void CheckBackGround() {
 		img_mask1 |= img_mask2;
 	}
 
-	erode(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));		//모폴로지침식
-
-	dilate(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(35, 35)));		//모폴로지팽창
+	erode(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(19, 19)));		//모폴로지침식
+	dilate(img_mask1, img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(37, 37)));		//모폴로지팽창
 
 
 	int numOfLables = connectedComponentsWithStats(img_mask1, img_labels,
 		stats, centroids, 8, CV_32S);
 
-	int max = 0;
-	int index = 1;
-	for (int j = 1; j < numOfLables; j++) {
-		int area = stats.at<int>(j, CC_STAT_AREA);
-		if (area > max) {
-			max = area;
-			index = j;
-		}
-	}
-
-
 	int p_left, p_top, p_width, p_height;
 
 
-	p_left = stats.at<int>(index, CC_STAT_LEFT);
-	p_top = stats.at<int>(index, CC_STAT_TOP);
-	p_width = stats.at<int>(index, CC_STAT_WIDTH);
-	p_height = stats.at<int>(index, CC_STAT_HEIGHT);
+	p_left = stats.at<int>(1, CC_STAT_LEFT);
+	p_top = stats.at<int>(1, CC_STAT_TOP);
+	p_width = stats.at<int>(1, CC_STAT_WIDTH);
+	p_height = stats.at<int>(1, CC_STAT_HEIGHT);
 
 	corners[0] = Point2f(p_left, p_top);
 	corners[1] = Point2f(p_left + p_width, p_top);
 	corners[2] = Point2f(p_left + p_width, p_top + p_height);
 	corners[3] = Point2f(p_left, p_top + p_height);
 
-	
+	//InsertDB(0, 0, p_left, p_top, p_width, p_height);
 
 }
 
@@ -246,10 +204,9 @@ void Warp() {
 	Mat trans = getPerspectiveTransform(corners, warpCorners);
 
 	//Warping
-	//img_frame = imread("A.jpg", IMREAD_COLOR);
+	img_frame = imread("A.jpg", IMREAD_COLOR);
 	warpPerspective(img_frame, warpImg, trans, warpSize);		// 컬러
 	imwrite("warpImg.jpg", warpImg);
-	imshow("wrapImg", warpImg);
 }
 
 // 작은 사각형 라벨링 + 좌표
@@ -313,8 +270,8 @@ void Labeling()
 		}
 
 		// morphological opening 작은 점들을 제거 (노이즈 제거)
-		erode(warp_img_mask1, warp_img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(17, 17)));		//모폴로지침식
-		dilate(warp_img_mask1, warp_img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(21, 21)));		//모폴로지팽창
+		erode(warp_img_mask1, warp_img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(21, 21)));		//모폴로지침식
+		dilate(warp_img_mask1, warp_img_mask1, getStructuringElement(MORPH_ELLIPSE, Size(25, 25)));		//모폴로지팽창
 
 																										// 라벨링 
 		int warp_numOfLables = connectedComponentsWithStats(warp_img_mask1, warp_img_labels,
@@ -336,9 +293,8 @@ void Labeling()
 			putText(small_warpImg, to_string(warp_j), Point(warp_left + 20, warp_top + 20),
 				FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2);
 
-			InsertDB(warp_j - 1, 0, warp_left, warp_top, warp_width, warp_height);
+			//InsertDB(warp_j - 1, 0, warp_left, warp_top, warp_width, warp_height);
 		}
-		
 		imshow("라벨링 된 warpImg", small_warpImg);
 		break;
 	}
@@ -370,7 +326,7 @@ int InsertDB(int index, int occupy, int startX, int startY, int lenX, int lenY) 
 	//printf("%s\m", szUrl);
 	long fileSize;
 	char *memBuffer, *headerBuffer;
-	FILE *fp;	
+	FILE *fp;
 
 	memBuffer = headerBuffer = NULL;
 
