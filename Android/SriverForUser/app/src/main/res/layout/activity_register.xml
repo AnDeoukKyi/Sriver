@@ -4,157 +4,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity"
+    android:background="@drawable/background">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/window_background_round"
+        android:layout_centerInParent="true"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:gravity="center"
+        >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/colorPrimary">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="SIGN UP!"
-                android:textColor="#ffffff"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            >
             <LinearLayout
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center">
+                android:layout_marginBottom="10dp">
 
                 <EditText
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:hint="ID"
-                    android:layout_gravity="center"
-                    android:padding="10dp"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
                     android:id="@+id/idText"
-                    android:drawableStart="@drawable/ic_person_black_24dp"
-                    android:drawableLeft="@drawable/ic_person_black_24dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/colorPrimary"
-                    />
-                <Button
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:textSize="13dp"
-                    android:textStyle="bold"
-                    android:background="@color/colorWarning"
-                    android:text="DUPLICATE"
+                    android:layout_width="235dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/validateButton"
-                    android:textColor="#ffffff"/>
+                    android:hint="ID"
+                    android:padding="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
+                <ImageButton
+                    android:id="@+id/validateButton"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_check_box_black_24dp" />
             </LinearLayout>
 
             <EditText
+                android:id="@+id/passwordText"
                 android:inputType="textPassword"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:hint="PW"
+                android:hint="PASSWORD"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:id="@+id/passwordText"
-                android:drawableStart="@drawable/ic_lock_black_24dp"
-                android:drawableLeft="@drawable/ic_lock_black_24dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
                 />
-
             <EditText
+                android:id="@+id/emailText"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:hint="EMAIL"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:id="@+id/emailText"
-                android:drawableStart="@drawable/ic_mail_outline_black_24dp"
-                android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
-                />
-
-            <EditText
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:hint="CARNUMBER"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:id="@+id/carnumberText"
-                android:drawableStart="@drawable/ic_directions_car_black_24dp"
-                android:drawableLeft="@drawable/ic_directions_car_black_24dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
-                />
-
-            <RadioGroup
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/genderGroup"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="WOMAN"
-                    android:id="@+id/genderWoman"
-                    android:layout_weight="1"
-                    android:checked="true"/>
-
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="MAN"
-                    android:id="@+id/genderMan"
-                    android:layout_weight="1"
-                    />
-
-            </RadioGroup>
-
-
-            <Button
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:background="@color/colorPrimary"
-                android:text="Registeration"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+            <EditText
+                android:id="@+id/carnumberText"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:hint="CAR NUMBER"
                 android:layout_gravity="center"
-                android:id="@+id/registerButton"/>
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"
+                />
+            <RadioGroup
+                android:id="@+id/genderGroup"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_marginBottom="15dp"
+                >
+                <RadioButton
+                    android:id="@+id/genderWoman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MAN"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:checked="true"
+                    android:layout_marginRight="55dp"/>
+                <RadioButton
+                    android:id="@+id/genderMan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WOMAN"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:textSize="18dp"/>
+            </RadioGroup>
 
-
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="280dp"
+                android:layout_height="match_parent"
+                android:textColor="#ffffff"
+                android:background="@drawable/button_background_round"
+                android:text="REGISTERATION"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                />
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GO TO LOGIN"
+            android:textStyle="bold"/>
     </LinearLayout>
 </RelativeLayout>
