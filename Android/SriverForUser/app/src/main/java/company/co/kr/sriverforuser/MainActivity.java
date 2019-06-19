@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> posX = new ArrayList<>();
     ArrayList<Integer> posY = new ArrayList<>();
 
-    String ID = "a";
+    String ID;
     int width;
     int height;
     int fragTop = 200;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this;
-
+        ID = getIntent().getStringExtra("ID");
         parkingPoint = new ArrayList<>();
         new ParkingPointLoad().execute();
 
