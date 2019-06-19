@@ -8,6 +8,14 @@
     tools:context=".MainActivity"
     android:id="@+id/layout_Main"
     android:background="#ffffff">
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <company.co.kr.sriverforuser.Draw
+            android:id="@+id/customView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"/>
+    </FrameLayout>
 
 </RelativeLayout>
