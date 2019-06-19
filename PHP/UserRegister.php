@@ -10,7 +10,7 @@
 
 
 
-	$statement = mysqli_prepare($con, "INSERT INTO MEMBER VALUES (?, ?, ?, ?, ?, 0, 0, 0)");
+	$statement = mysqli_prepare($con, "INSERT INTO MEMBER VALUES (?, ?, ?, ?, ?, 0, 0, 0, -1)");
 	$a = mysqli_stmt_bind_param($statement, "sssss", $ID, $PW, $EMAIL, $CAR, $GENDER);
 	//sssss->문자열형태로 받겠다
 	$b = mysqli_stmt_execute($statement);

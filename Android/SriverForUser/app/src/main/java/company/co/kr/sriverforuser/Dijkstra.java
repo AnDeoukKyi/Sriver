@@ -10,18 +10,20 @@ public class Dijkstra {
     int[] dist;
     boolean[] visited;
     int[] prev;
+    int N= 0;
     Vector<Integer> steps = new Vector<Integer>();
 
     //호출순서
     //INIT->CONNECTNODE or DONNECT->SEARCHPATH
 
     public void INIT(int n){
-        LEN = new int[n][n];
-        dist = new int[n];
-        visited = new boolean[n];
-        prev = new int[n];
+        this.N = n;
+        LEN = new int[N][N];
+        dist = new int[N];
+        visited = new boolean[N];
+        prev = new int[N];
         //INF로 채움
-        for(int i=0; i<n; i++)
+        for(int i=0; i<N; i++)
             Arrays.fill(LEN[i], INF);
         // start node부터 i node까지의 최단거리
         Arrays.fill(dist, INF);
@@ -33,6 +35,7 @@ public class Dijkstra {
     }
 
     public void CONNECT(int a1, int a2, int len){
+        if(len == 0) len = 1;
         LEN[a1][a2] = LEN[a2][a1] = len;
     }
 
@@ -51,7 +54,7 @@ public class Dijkstra {
         // 연결된 노드들 중 짧은 거리 노드의 인덱스
         int min=INF;
 
-        for(int i=0; i<LEN.length; i++){
+        for(int i=0; i<N; i++){
 
             // start node의 하위 트리 탐색
             // 조건1 : 방문이력x
@@ -87,8 +90,8 @@ public class Dijkstra {
     public ArrayList<Integer> SEARCHPATH(){
         ArrayList<Integer> path = new ArrayList<>();
         dist[0] = 0;
-        shortestPath(0,LEN.length-1);
-        makingPath(0,LEN.length-1,LEN.length-1);
+        shortestPath(0,N-1);
+        makingPath(0,N-1,N-1);
         for(int node : steps){
             path.add(node);
         }

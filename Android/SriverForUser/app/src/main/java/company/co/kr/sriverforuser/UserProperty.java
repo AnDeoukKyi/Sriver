@@ -41,7 +41,7 @@ public class UserProperty extends Activity {
         tv_UserProperty_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Restart();
+                Restart();
             }
         });
     }
@@ -63,15 +63,15 @@ public class UserProperty extends Activity {
 
 
     }
-//    public void Restart(){
-//        SharedPreferences sharedPreferences = getSharedPreferences("Login",MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("ID", "");
-//        editor.putString("PW", "");
-//        editor.commit();
-//        ActivityCompat.finishAffinity(this);
-//        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//    }
+    public void Restart(){
+        SharedPreferences sharedPreferences = getSharedPreferences("Login",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("ID", "");
+        editor.putString("PW", "");
+        editor.commit();
+        ActivityCompat.finishAffinity(this);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

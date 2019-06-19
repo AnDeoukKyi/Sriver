@@ -29,7 +29,7 @@
             android:text="SRIVER."
             android:textSize="70dp"
             android:textColor="@color/colorWhite"
-            android:fontFamily="@font/KoolBean"
+            android:fontFamily="@font/koolbean"
             android:layout_marginBottom="20dp"
             />
         <ImageView

@@ -1,6 +1,9 @@
 package company.co.kr.sriverforuser;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.AsyncTask;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,13 +50,17 @@ public class MainActivity extends AppCompatActivity {
     int startX, startY, lenX, lenY;
     int maxIndexX = 0, maxIndexY = 0;
     int carX = 100, carY = 300;
+    int dCarX = 0, dCarY = 0;
+    int ddCarX = 0, ddCarY = 0;
+    int revx = 0, revy = 0;
+    int dir = 0;//0=up, 1=right, 2=down, 3=left
     int pWidth, pHeight;
     int reserv = 0;
     ArrayList<Integer> rposX = new ArrayList<>();
     ArrayList<Integer> rposY = new ArrayList<>();
     ArrayList<TextView> tvList = new ArrayList<>();
     static public ArrayList<Point> Path = new ArrayList<>();
-    static public ArrayList<Point> crossPoint = new ArrayList<>();
+    static public ArrayList<CrossPoint> crossPoint = new ArrayList<>();
 
     RelativeLayout topLL;
     TextView tv_click = null;
@@ -66,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     private ReservationDialog reservationDialog;
 
 
-    int c = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,17 +91,25 @@ public class MainActivity extends AppCompatActivity {
         height = size.y;
         dijkstra = new Dijkstra();
         topLL = (RelativeLayout)findViewById(R.id.layout_Main);
+        ImageButton ib_userProperty = (ImageButton)findViewById(R.id.ib_userProperty);
 
+
+        ib_userProperty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UserProperty.class));
+            }
+        });
         new UserPosLoad().execute();
 
         Thread myThread = new Thread(new Runnable() {
             public void run() {
+                int ab = 0;
                 while (true) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(10000);
                         new UserPosLoad().execute();
-                        c+=20;
-                        Path.set(0, new Point(0, c));
+                        CarMove(ab++);
                         //데이터 받아와야됨
                     } catch (Throwable t) {
                     }
@@ -121,30 +136,6 @@ public class MainActivity extends AppCompatActivity {
             int y = 0;
             if(point != 0)
                 y = point / maxIndexX;
-            int countX = 0;//x위치조정용
-            int countY = 0;//y위치조정용
-
-
-            int count = 0;
-            for(int j = 0; j<rposX.size(); j++){
-                if(rposX.get(j) == 1){
-                    count++;
-                    if(count == x + 1) break;
-                    countX++;
-                }
-                else
-                    countX++;
-            }
-            count = 0;
-            for(int j = 0; j<rposY.size(); j++){
-                if(rposY.get(j) == 1){
-                    count++;
-                    if(count == y + 1) break;
-                    countY++;
-                }
-                else
-                    countY++;
-            }
             int px = posX.get(point % posX.size());
             int py;
             if(point == 0)
@@ -390,27 +381,250 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject object = jsonArray.getJSONObject(count);
                     carX = object.getInt("POSX");
                     carY = object.getInt("POSY");
+                    dir = object.getInt("DIR");
                     count++;
                 }
-                dijkstra.INIT(5);
-                dijkstra.CONNECT(0, 1, 6);
-                dijkstra.CONNECT(0, 2, 2);
-                dijkstra.CONNECT(1, 2, 3);
-                dijkstra.CONNECT(2, 3, 3);
-                dijkstra.CONNECT(1, 3, 6);
-                dijkstra.CONNECT(1, 4, 4);
-                dijkstra.CONNECT(3, 4, 11);
-                PathToPoint(dijkstra.SEARCHPATH());
 
-                int dCarX = ((width-fragLeft-fragRight)*carX)/maxWidth;
-                int dCarY = ((height-fragTop-fragBottom)*carY)/maxHeight;
+                int point = 0;
+                reserv = reserv;
+                for(int i =0; i<tvList.size(); i++){
+                    if(tvList.get(i).getHint().toString().substring(1).equals(Integer.toString(reserv))){
+                        point = Integer.parseInt(tvList.get(i).getHint().toString().substring(1));
+                        break;
+                    }
+                }
+                int x = point % maxIndexX;
+                int y = 0;
+                if(point != 0)
+                    y = point / maxIndexX;
+                int px = posX.get(point % posX.size());
+                int py;
+                if(point == 0)
+                    py = posY.get(0);
+                else
+                    py = posY.get(point / posX.size());
 
+                revx = ChangeRate(0, px + (posX.get(1)-posX.get(0))/2);
+                revy = ChangeRate(1, py);
+
+                dCarX = ChangeRate(0, carX);
+                dCarY = ChangeRate(1, carY);
+                Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_car);
+                int w = image.getWidth();
+                int h = image.getHeight();
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(dCarX+fragLeft, dCarY+fragTop, 0, 0);//차량좌표 제대로해야됨
+                layoutParams.setMargins(dCarX-w/2, dCarY-h/2, 0, 0);//차량좌표 제대로해야됨
+                int k = dCarX-w/2;
+                k = k;
+                int g = dCarY-h/2;
+                g = g;
                 im.setLayoutParams(layoutParams);
                 im.setImageResource(R.drawable.ic_car);
                 topLL.removeView(im);
                 topLL.addView(im);
+
+                //dd위치 조정 배치에 따라서 수선
+                if(
+                        (dCarX >= crossPoint.get(0).startX && dCarX <= crossPoint.get(0).startX + crossPoint.get(0).getWidth())
+                        || (dCarX >= crossPoint.get(2).startX && dCarX <= crossPoint.get(2).startX + crossPoint.get(2).getWidth())){
+                        if(
+                                (dCarY >= crossPoint.get(0).startY && dCarY <= crossPoint.get(0).startY + crossPoint.get(0).getHeight())
+                                        || (dCarY >= crossPoint.get(1).startX && dCarY <= crossPoint.get(1).startY + crossPoint.get(1).getHeight())){
+
+
+                            ddCarX = crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).getPoint().x;
+                            ddCarY = dCarY;
+                        }
+                        else{
+                            ddCarX = dCarX;
+                            ddCarY = dCarY;
+                        }
+                }
+                else{
+                    ddCarX = dCarX;
+                    ddCarY = crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).getPoint().y;
+                }
+                dijkstra.INIT(6);
+                dijkstra.CONNECT(1, 2, DistanceInt(crossPoint.get(0).getPoint(), crossPoint.get(2).getPoint()));
+                dijkstra.CONNECT(2, 3, DistanceInt(crossPoint.get(2).getPoint(), crossPoint.get(3).getPoint()));
+                dijkstra.CONNECT(3, 4, DistanceInt(crossPoint.get(1).getPoint(), crossPoint.get(3).getPoint()));
+                dijkstra.CONNECT(4, 1, DistanceInt(crossPoint.get(1).getPoint(), crossPoint.get(0).getPoint()));
+
+                if(revx >= crossPoint.get(0).startX  + crossPoint.get(0).getWidth() && revx <= crossPoint.get(2).startX){
+                    //예약지점이 y기준으로 있을때
+                    //y가 0,2쪽인지 1,3쪽인지 판단해야됨
+                    if(crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y > width/2){
+                        //밑(1,3)
+                        dijkstra.DONNECT(3, 4);
+                        dijkstra.CONNECT(5, 3, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y), crossPoint.get(3).getPoint()));
+                        dijkstra.CONNECT(5, 4, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y), crossPoint.get(1).getPoint()));
+                    }
+                    else{
+                        //위 (0,2)
+                        dijkstra.DONNECT(1, 2);
+                        dijkstra.CONNECT(5, 1, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y), crossPoint.get(0).getPoint()));
+                        dijkstra.CONNECT(5, 2, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y), crossPoint.get(2).getPoint()));
+                    }
+                }
+                else{
+                    //바깥쪽일때는 그냥 추가하면됨
+                    int dot = 0;
+                    switch(NearCrossPoint(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y))){
+                        case 0:
+                            dot = 1;
+                            break;
+                        case 1:
+                            dot = 4;
+                            break;
+                        case 2:
+                            dot = 2;
+                            break;
+                        case 3:
+                            dot = 3;
+                            break;
+                    }
+                    dijkstra.CONNECT(5, dot, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y), crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint()));
+
+                }
+
+
+                if(ddCarX >= crossPoint.get(0).startX  + crossPoint.get(0).getWidth() && ddCarX <= crossPoint.get(2).startX){
+                    //차량지점이 y기준으로 있을때
+                    //y가 0,2쪽인지 1,3쪽인지 판단해야됨
+                    if(crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y > width/2){
+                        //밑(1,3)
+                        dijkstra.DONNECT(3, 4);
+                        dijkstra.CONNECT(0, 3, DistanceInt(new Point(ddCarX, crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y), crossPoint.get(3).getPoint()));
+                        dijkstra.CONNECT(0, 4, DistanceInt(new Point(ddCarX, crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y), crossPoint.get(1).getPoint()));
+                    }
+                    else{
+                        //위 (0,2)
+                        dijkstra.DONNECT(1, 2);
+                        dijkstra.CONNECT(0, 1, DistanceInt(new Point(ddCarX, crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y), crossPoint.get(0).getPoint()));
+                        dijkstra.CONNECT(0, 2, DistanceInt(new Point(ddCarX, crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y), crossPoint.get(2).getPoint()));
+                    }
+                }
+                else{
+                    //바깥쪽일때는 그냥 추가하면됨
+                    int dot = 0;
+                    switch(NearCrossPoint(new Point(ddCarX, crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y))){
+                        case 0:
+                            dot = 1;
+                            break;
+                        case 1:
+                            dot = 4;
+                            break;
+                        case 2:
+                            dot = 2;
+                            break;
+                        case 3:
+                            dot = 3;
+                            break;
+                    }
+                    dijkstra.CONNECT(0, dot, DistanceInt(new Point(ddCarX, crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint().y), crossPoint.get(NearCrossPoint(new Point(ddCarX, ddCarY))).getPoint()));
+
+                }
+                dijkstra = dijkstra;
+
+
+//
+//                ddCarX = dCarX;
+//                ddCarY = dCarY;
+//                if(dCarX >= crossPoint.get(0).x && dCarX <= crossPoint.get(3).x){
+//                    ddCarY = crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y;
+//                }
+//                if(dCarX >= crossPoint.get(0).x && dCarX <= crossPoint.get(3).x
+//                        && dCarY >= crossPoint.get(0).y && dCarY <= crossPoint.get(3).y){
+//                    //사각형 안쪽임
+//                    dijkstra.INIT(6);
+//                    dijkstra.CONNECT(1, 2, DistanceInt(crossPoint.get(0).getPoint(), crossPoint.get(2).getPoint()));
+//                    dijkstra.CONNECT(2, 3, DistanceInt(crossPoint.get(2).getPoint(), crossPoint.get(3).getPoint()));
+//                    dijkstra.CONNECT(3, 4, DistanceInt(crossPoint.get(1).getPoint(), crossPoint.get(3).getPoint()));
+//                    dijkstra.CONNECT(4, 1, DistanceInt(crossPoint.get(1).getPoint(), crossPoint.get(0).getPoint()));
+//
+//                    //차량과 가까운 지점 연결
+//                    int dot = 0;
+//                    switch(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).getPoint().y))){
+//                        case 0:
+//                            dot = 1;
+//                            break;
+//                        case 1:
+//                            dot = 4;
+//                            break;
+//                        case 2:
+//                            dot = 2;
+//                            break;
+//                        case 3:
+//                            dot = 3;
+//                            break;
+//                    }
+//                    if (crossPoint.get(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y))).y ==
+//                            crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y) {
+//
+//
+//                    }
+//                    dijkstra.CONNECT(0, dot, DistanceInt(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y), crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY)))));
+//
+//
+//                    int dott = 0;
+//                    switch(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y))){
+//                        case 0:
+//                            dott = 1;
+//                            break;
+//                        case 1:
+//                            dott = 4;
+//                            break;
+//                        case 2:
+//                            dott = 2;
+//                            break;
+//                        case 3:
+//                            dott = 3;
+//                            break;
+//                    }
+//                    dijkstra.CONNECT(0, dot, DistanceInt(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y), crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY)))));
+//
+//
+//                }
+//                else{
+//
+//                }
+//
+//
+//
+//                int dot = 0;
+//                switch(NearCrossPoint(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).y))){
+//                    case 0:
+//                        dot = 1;
+//                        break;
+//                    case 1:
+//                        dot = 4;
+//                        break;
+//                    case 2:
+//                        dot = 2;
+//                        break;
+//                    case 3:
+//                        dot = 3;
+//                        break;
+//                }
+//                dijkstra.CONNECT(5, dot, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).y), crossPoint.get(NearCrossPoint(new Point(revx, revy)))));
+//                dot = 0;
+//                switch(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y))){
+//                    case 0:
+//                        dot = 1;
+//                        break;
+//                    case 1:
+//                        dot = 4;
+//                        break;
+//                    case 2:
+//                        dot = 2;
+//                        break;
+//                    case 3:
+//                        dot = 3;
+//                        break;
+//                }
+//                dijkstra.CONNECT(0, dot, DistanceInt(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y), crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY)))));
+
+                PathToPoint(dijkstra.SEARCHPATH());
 
             }
             catch(Exception e){
@@ -485,12 +699,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void PathToPoint(ArrayList<Integer> p){
+        p = p;
         Path.clear();
-        Path.add(new Point(0, 0));
-        Path.add(new Point(300, 300));
-        Path.add(new Point(400, 700));
-        Path.add(new Point(500, 800));
-        Path.add(new Point(600, 900));
+        Path.add(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).getPoint().y));
+        crossPoint = crossPoint;
+        for(int i = 0; i<p.size(); i++){
+            if(p.get(i) >= 1 && p.get(i) <= 4){
+                int dot = 0;
+                switch(p.get(i)){
+                    case 1:
+                        dot = 0;
+                        break;
+                    case 2:
+                        dot = 2;
+                        break;
+                    case 3:
+                        dot = 3;
+                        break;
+                    case 4:
+                        dot = 1;
+                        break;
+                }
+                Path.add(new Point(crossPoint.get(dot).getPoint().x, crossPoint.get(dot).getPoint().y));
+            }
+        }
+        Path.add(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).getPoint().y));
+
+
+
+
     }
 
 
@@ -637,24 +874,31 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Integer> x = new ArrayList<>();
         ArrayList<Integer> y = new ArrayList<>();
         int count= 0;
-        for(int i = 0; i<rposX.size(); i++)
-            if(rposX.get(i) == 0){
-                x.add(i-count);
+        for(int i = 0; i<rposX.size(); i++) {
+            if (rposX.get(i) == 0) {
+                x.add(i - count);
                 count++;
             }
-
+        }
         count = 0;
-        for(int i = 0; i<rposY.size(); i++)
-            if(rposY.get(i) == 0){
-                y.add(i-count);
+        for(int i = 0; i<rposY.size(); i++) {
+            if (rposY.get(i) == 0) {
+                y.add(i - count);
                 count++;
             }
-
+        }
         y = y;
         x = x;
         for(int i = 0; i<x.size(); i++)
             for(int j = 0; j<y.size(); j++)
-                crossPoint.add(new Point(((width-fragLeft-fragRight)*(posX.get(x.get(i)) + posX.get(x.get(i) - 1) + pWidth) / 2)/maxWidth + fragLeft, ((height-fragTop-fragBottom)*(posY.get(y.get(j)) + posY.get(y.get(j) - 1) + pHeight) / 2)/maxHeight + fragTop));
+                crossPoint.add(new CrossPoint(new Point(
+                        ChangeRate(0, (posX.get(x.get(i)) + posX.get(x.get(i) - 1) + pWidth) / 2),
+                                ChangeRate(1, (posY.get(y.get(j)) + posY.get(y.get(j) - 1) + pHeight) / 2)),
+                        ChangeRate(0, posX.get(x.get(i)-1) + pWidth),
+                        ChangeRate(1, posY.get(y.get(j)-1) + pHeight),
+                        ChangeRate(0, posX.get(x.get(i)) - posX.get(x.get(i) - 1) - pWidth),
+                        ChangeRate(1, posY.get(y.get(j)) - posY.get(y.get(j) - 1) - pHeight)
+                ));
      crossPoint = crossPoint;
     }
 
@@ -673,7 +917,7 @@ public class MainActivity extends AppCompatActivity {
         parkingPoint = parkingPoint;
         for(int i = 0; i<parkingPoint.size(); i++){
             if(parkingPoint.get(i).occupy == 0){
-                double dis = NearPoint(new Point(carX, carY), new Point(parkingPoint.get(i).startX, parkingPoint.get(i).startY));
+                double dis = Distance(new Point(carX, carY), new Point(parkingPoint.get(i).startX, parkingPoint.get(i).startY));
                 if(min > dis){
                     min = dis;
                     reserv = i;
@@ -706,9 +950,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private double NearPoint(Point p1, Point p2){
+    private int NearCrossPoint(Point p1){
+
+        int index = 0;
+        double dis = 9999;
+        for(int i = 0; i<crossPoint.size(); i++){
+            double distance = Math.sqrt((Math.pow(p1.x-crossPoint.get(i).getPoint().x, 2) + Math.pow(p1.y-crossPoint.get(i).getPoint().y, 2)));
+            if(distance < dis){
+                index = i;
+                dis = distance;
+            }
+        }
+        return index;
+    }
+    private double Distance(Point p1, Point p2){
 
         return Math.sqrt((Math.pow(p1.x-p2.x, 2) + Math.pow(p1.y-p2.y, 2)));
+    }
+    private int DistanceInt(Point p1, Point p2){
+
+        return (int)(Math.sqrt((Math.pow(p1.x-p2.x, 2) + Math.pow(p1.y-p2.y, 2))));
+    }
+    public void CarMove(int n){
+
+
+
+    }
+
+    public int ChangeRate(int num, int change){
+        //num = 0 x
+        //num = 1 y
+        if(num == 0)
+            return ((width-fragLeft-fragRight)*change)/maxWidth + fragLeft;
+         else
+            return ((height-fragTop-fragBottom)*change)/maxHeight + fragTop;
+
     }
 
 

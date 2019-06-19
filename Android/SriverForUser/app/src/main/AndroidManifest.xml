@@ -19,6 +19,12 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity"></activity>
+
+
+
+        <activity android:name=".UserProperty"
+            android:theme="@style/Theme.Transparent">
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -50,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        final Button validateButton = (Button) findViewById(R.id.validateButton);
+        final ImageButton validateButton = (ImageButton) findViewById(R.id.validateButton);
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
