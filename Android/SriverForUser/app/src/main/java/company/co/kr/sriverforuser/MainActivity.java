@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 int ab = 0;
                 while (true) {
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(1000);
                         new UserPosLoad().execute();
                         CarMove(ab++);
                         //데이터 받아와야됨
@@ -525,104 +525,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 dijkstra = dijkstra;
-
-
-//
-//                ddCarX = dCarX;
-//                ddCarY = dCarY;
-//                if(dCarX >= crossPoint.get(0).x && dCarX <= crossPoint.get(3).x){
-//                    ddCarY = crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y;
-//                }
-//                if(dCarX >= crossPoint.get(0).x && dCarX <= crossPoint.get(3).x
-//                        && dCarY >= crossPoint.get(0).y && dCarY <= crossPoint.get(3).y){
-//                    //사각형 안쪽임
-//                    dijkstra.INIT(6);
-//                    dijkstra.CONNECT(1, 2, DistanceInt(crossPoint.get(0).getPoint(), crossPoint.get(2).getPoint()));
-//                    dijkstra.CONNECT(2, 3, DistanceInt(crossPoint.get(2).getPoint(), crossPoint.get(3).getPoint()));
-//                    dijkstra.CONNECT(3, 4, DistanceInt(crossPoint.get(1).getPoint(), crossPoint.get(3).getPoint()));
-//                    dijkstra.CONNECT(4, 1, DistanceInt(crossPoint.get(1).getPoint(), crossPoint.get(0).getPoint()));
-//
-//                    //차량과 가까운 지점 연결
-//                    int dot = 0;
-//                    switch(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).getPoint().y))){
-//                        case 0:
-//                            dot = 1;
-//                            break;
-//                        case 1:
-//                            dot = 4;
-//                            break;
-//                        case 2:
-//                            dot = 2;
-//                            break;
-//                        case 3:
-//                            dot = 3;
-//                            break;
-//                    }
-//                    if (crossPoint.get(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y))).y ==
-//                            crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y) {
-//
-//
-//                    }
-//                    dijkstra.CONNECT(0, dot, DistanceInt(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y), crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY)))));
-//
-//
-//                    int dott = 0;
-//                    switch(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y))){
-//                        case 0:
-//                            dott = 1;
-//                            break;
-//                        case 1:
-//                            dott = 4;
-//                            break;
-//                        case 2:
-//                            dott = 2;
-//                            break;
-//                        case 3:
-//                            dott = 3;
-//                            break;
-//                    }
-//                    dijkstra.CONNECT(0, dot, DistanceInt(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y), crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY)))));
-//
-//
-//                }
-//                else{
-//
-//                }
-//
-//
-//
-//                int dot = 0;
-//                switch(NearCrossPoint(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).y))){
-//                    case 0:
-//                        dot = 1;
-//                        break;
-//                    case 1:
-//                        dot = 4;
-//                        break;
-//                    case 2:
-//                        dot = 2;
-//                        break;
-//                    case 3:
-//                        dot = 3;
-//                        break;
-//                }
-//                dijkstra.CONNECT(5, dot, DistanceInt(new Point(revx, crossPoint.get(NearCrossPoint(new Point(revx, revy))).y), crossPoint.get(NearCrossPoint(new Point(revx, revy)))));
-//                dot = 0;
-//                switch(NearCrossPoint(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y))){
-//                    case 0:
-//                        dot = 1;
-//                        break;
-//                    case 1:
-//                        dot = 4;
-//                        break;
-//                    case 2:
-//                        dot = 2;
-//                        break;
-//                    case 3:
-//                        dot = 3;
-//                        break;
-//                }
-//                dijkstra.CONNECT(0, dot, DistanceInt(new Point(dCarX, crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY))).y), crossPoint.get(NearCrossPoint(new Point(dCarX, dCarY)))));
 
                 PathToPoint(dijkstra.SEARCHPATH());
 

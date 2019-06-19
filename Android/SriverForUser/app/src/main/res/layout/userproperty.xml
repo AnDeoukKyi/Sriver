@@ -1,20 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff00"
+    android:background="#94f4a0"
     android:orientation="vertical"
-    android:gravity="center">
+    >
+
+    <ImageView
+        android:id="@+id/parkingLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/logo"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"/>
+    <LinearLayout
+        android:id="@+id/idInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/parkingLogo"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SeoYouJin9898"
+            android:fontFamily="@font/koolbean"
+            android:textSize="25dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 님"
+            android:textStyle="bold"
+            android:textSize="25dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/aLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/idInformation"
+        />
+    <TextView
+        android:id="@+id/carTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAR : "
+        android:fontFamily="@font/koolbean"
+        android:textSize="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/aLine"/>
+    <TextView
+        android:id="@+id/carName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서울 18가 1234"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/carTitle"/>
 
     <TextView
         android:id="@+id/tv_UserProperty_LogOut"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="로그아웃"
-        android:textColor="#000000"
         android:textSize="20dp"
-        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/carName"
         android:layout_marginBottom="5dp"/>
 
-</LinearLayout>
+</RelativeLayout>
