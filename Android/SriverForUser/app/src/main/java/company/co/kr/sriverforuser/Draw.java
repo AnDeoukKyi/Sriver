@@ -33,13 +33,7 @@ public class Draw extends View {
         super.onDraw(canvas);
 
         final Paint paint = new Paint(); // 페인트 객체 생성
-        paint.setColor(Color.GREEN); // 빨간색으로 설정
-        paint.setStrokeWidth(30);
 
-        for(int i = 0; i<MainActivity.crossPoint.size(); i++) {
-            canvas.drawPoint(MainActivity.crossPoint.get(i).getPoint().x, MainActivity.crossPoint.get(i).getPoint().y, paint);
-            canvas.drawRect(MainActivity.crossPoint.get(i).startX, MainActivity.crossPoint.get(i).startY, MainActivity.crossPoint.get(i).startX + MainActivity.crossPoint.get(i).width, MainActivity.crossPoint.get(i).startY + MainActivity.crossPoint.get(i).height, paint);
-        }
 
 
         paint.setColor(Color.RED); // 빨간색으로 설정

@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     String a = tv.getHint().toString();
-                    a = a;
                     reserv = reserv;
                     if(tv.getHint().toString().substring(0, 1).equals("0")
                             && !tv.getHint().toString().substring(1).equals(Integer.toString(reserv))){
@@ -866,7 +865,8 @@ public class MainActivity extends AppCompatActivity {
         parkingPoint = parkingPoint;
         for(int i = 0; i<parkingPoint.size(); i++){
             if(parkingPoint.get(i).occupy == 0){
-                double dis = Distance(new Point(carX, carY), new Point(parkingPoint.get(i).startX, parkingPoint.get(i).startY));
+                double dis = Distance(new Point(dCarX, dCarY), new Point(parkingPoint.get(i).startX, parkingPoint.get(i).startY));
+                dis = dis;
                 if(min > dis){
                     min = dis;
                     reserv = i;
