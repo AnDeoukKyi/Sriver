@@ -10,7 +10,7 @@ public class Dijkstra {
     int[] dist;
     boolean[] visited;
     int[] prev;
-    int N= 0;
+    int N;
     Vector<Integer> steps = new Vector<Integer>();
 
     //호출순서
@@ -35,7 +35,7 @@ public class Dijkstra {
     }
 
     public void CONNECT(int a1, int a2, int len){
-        if(len == 0) len = 1;
+        if (len == 0) len = 10;
         LEN[a1][a2] = LEN[a2][a1] = len;
     }
 
