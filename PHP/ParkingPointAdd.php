@@ -8,10 +8,9 @@
     $STARTX = $_GET["STARTX"];
     $STARTY = $_GET["STARTY"];
 
-    $result = mysqli_query($con, "INSERT INTO PARKINGPOINT VALUES ($POINT, $OCCUPY, $STARTX, $STARTY)");
+    $result = mysqli_query($con, "INSERT INTO PARKINGPOINT VALUES ($POINT, $OCCUPY, $STARTX, $STARTY, 'NULL')");
 
 
-    mysqli_stmt_bind_param($result, "iiii", $index, $occupy, $startX, $startY);
     mysqli_stmt_execute($result);
 
 

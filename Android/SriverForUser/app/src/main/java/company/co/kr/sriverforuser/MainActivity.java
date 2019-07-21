@@ -122,13 +122,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void Print(){
+        posX = posX;
+
+        int c = 0;
+        for(int k = 0; k<rposX.size(); k++)
+            if(rposX.get(k) == 1) c++;
+        c = c;
+        rposY =rposY;
         for(int i = 0; i<parkingPoint.size(); i++) {
-            int point = parkingPoint.get(i).point - 1;//번호
+            int pointp = parkingPoint.get(i).point - 1;//번호
             int occupy = parkingPoint.get(i).occupy;//점유
             int startX = parkingPoint.get(i).startX;//x
             int startY = parkingPoint.get(i).startY;//y
             final TextView tv = new TextView(MainActivity.this);
 
+            //point=> 안드로이드에서 드로우할 위치계산용
+            //카메라에서 보내는 index(point)
+
+            int xi = ApproachX(startX);
+            int yi = ApproachY(startY);
+            int point = xi + yi *c;
+            point = point;
+            parkingPoint.get(i).point = point;
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(lenX, lenY);
             if(im == null){
                 im = new ImageView(MainActivity.this);
@@ -143,21 +158,22 @@ public class MainActivity extends AppCompatActivity {
                 py = posY.get(0);
             else
                 py = posY.get(point / posX.size());
-
+            parkingPoint.get(i).index = point;
             layoutParams.setMargins((px *(width-fragLeft-fragRight))/maxWidth + fragLeft, (py *(height-fragTop-fragBottom))/maxHeight + fragTop, 0, 0);
             tv.setLayoutParams(layoutParams);
             tv.setHint(Integer.toString(occupy) + Integer.toString(point));
+            tv.setText(tv.getHint().toString()+Integer.toString(i+1));
             //tv.setHintTextColor(Color.alpha(0));
-            tv.setTextSize(10);
+            tv.setTextSize(20);
             switch(occupy){
                 case 0:
                     tv.setBackgroundResource(R.drawable.edge_empty);
                     break;
                 case 1:
-                    tv.setBackgroundResource(R.drawable.edge_occupy);
+                    tv.setBackgroundResource(R.drawable.edge_reversation);
                     break;
                 case 2:
-                    tv.setBackgroundResource(R.drawable.edge_reversation);
+                    tv.setBackgroundResource(R.drawable.edge_occupy);
                     break;
             }
 
@@ -189,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
             topLL.addView(tv);
             tvList.add(tv);//tv리스트에 추가
         }
+        tvList = tvList;
     }
 
     private View.OnClickListener plusBillDialog_OkClickListener = new View.OnClickListener() {
@@ -699,7 +716,7 @@ public class MainActivity extends AppCompatActivity {
             else{
                 boolean check = false;
                 for(int j = 0; j<posX.size(); j++){
-                    if(posX.get(j) < parkingPoint.get(i).getStartX()+10 && posX.get(j) > parkingPoint.get(i).getStartX()-10){
+                    if(posX.get(j) < parkingPoint.get(i).getStartX()+20 && posX.get(j) > parkingPoint.get(i).getStartX()-20){
                         check = true;
                         break;
                     }
@@ -750,7 +767,7 @@ public class MainActivity extends AppCompatActivity {
             else{
                 boolean check = false;
                 for(int j = 0; j<posY.size(); j++){
-                    if(posY.get(j) < parkingPoint.get(i).getStartY()+10 && posY.get(j) > parkingPoint.get(i).getStartY()-10){
+                    if(posY.get(j) < parkingPoint.get(i).getStartY()+20 && posY.get(j) > parkingPoint.get(i).getStartY()-20){
                         check = true;
                         break;
                     }
@@ -994,4 +1011,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    private int ApproachX(int n){
+        int index = 0;
+        int min = 99999;
+        for(int i = 0; i<posX.size(); i++){
+            int num = Math.abs(n-posX.get(i));
+            if(min > num){
+                min = num;
+                index = i;
+            }
+        }
+        return index;
+    }
+    private int ApproachY(int n){
+        int index = 0;
+        int min = 99999;
+        for(int i = 0; i<posY.size(); i++){
+            int num = Math.abs(n-posY.get(i));
+            if(min > num){
+                min = num;
+                index = i;
+            }
+        }
+        return index;
+    }
 }

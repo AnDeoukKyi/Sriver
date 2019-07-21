@@ -5,6 +5,7 @@ public class ParkingPoint {
     int occupy;
     int startX;
     int startY;
+    int index;
 
     public ParkingPoint(int point, int occupy, int startX, int startY) {
         this.point = point;
