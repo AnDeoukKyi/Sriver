@@ -57,8 +57,8 @@
                         android:hint="ID"
                         android:layout_gravity="center"
                         android:padding="10dp"
-                        android:textColor="@color/colorWhite"
-                        android:textColorHint="@color/colorWhite"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"
                         android:textStyle="bold"
                         />
                     <EditText
@@ -69,8 +69,8 @@
                         android:hint="PW"
                         android:layout_gravity="center"
                         android:padding="10dp"
-                        android:textColor="@color/colorWhite"
-                        android:textColorHint="@color/colorWhite"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"
                         android:textStyle="bold"
                         />
 
