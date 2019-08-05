@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 public class ReservationDialog extends Dialog {
 
-    private View.OnClickListener plusBillDialog_OkClickListener;
-    private View.OnClickListener plusBillDialog_CancelClickListener;
+    private View.OnClickListener ReservationDialog_OkClickListener;
+    private View.OnClickListener ReservationDialog_CancelClickListener;
     private Context context;
     private TextView tv;
 
-    public ReservationDialog(Context context, TextView tv ,View.OnClickListener plusBillDialog_OkClickListener, View.OnClickListener plusBillDialog_CancelClickListener) {
+    public ReservationDialog(Context context, TextView tv ,View.OnClickListener ReservationDialog_OkClickListener, View.OnClickListener ReservationDialog_CancelClickListener) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.context = context;
         this.tv = tv;
-        this.plusBillDialog_OkClickListener = plusBillDialog_OkClickListener;
-        this.plusBillDialog_CancelClickListener = plusBillDialog_CancelClickListener;
+        this.ReservationDialog_OkClickListener = ReservationDialog_OkClickListener;
+        this.ReservationDialog_CancelClickListener = ReservationDialog_CancelClickListener;
     }
 
 
@@ -36,8 +36,8 @@ public class ReservationDialog extends Dialog {
         TextView tv_ReservationDialog_Ok = (TextView)findViewById(R.id.tv_ReservationDialog_Ok);
         TextView tv_ReservationDialog_Cancel = (TextView)findViewById(R.id.tv_ReservationDialog_Cancel);
 
-        tv_ReservationDialog_Ok.setOnClickListener(plusBillDialog_OkClickListener);
-        tv_ReservationDialog_Cancel.setOnClickListener(plusBillDialog_CancelClickListener);
+        tv_ReservationDialog_Ok.setOnClickListener(ReservationDialog_OkClickListener);
+        tv_ReservationDialog_Cancel.setOnClickListener(ReservationDialog_CancelClickListener);
     }
 
 

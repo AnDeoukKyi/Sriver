@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     int fragLeft = 100;
     int fragRight = 100;
     int maxWidth, maxHeight;
-
+    int kx = 0, ky = 0;
     int totalStartX = 0, totalStartY = 0, totalLenX = 0, totalLenY = 0;
     int startX, startY, lenX, lenY;
     int maxIndexX = 0, maxIndexY = 0;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     int revx = 0, revy = 0, revHy = 0;
     int dir = 0;//0=up, 1=right, 2=down, 3=left
     int pWidth, pHeight;
-    int reserv = 0;
+    int reserv = -1;
     ArrayList<Integer> rposX = new ArrayList<>();
     ArrayList<Integer> rposY = new ArrayList<>();
     ArrayList<TextView> tvList = new ArrayList<>();
@@ -72,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ReservationDialog reservationDialog;
+    private ParkingDialog parkingDialog;
+
+
+
+
+    int check  = 0;
+    boolean stop = true;
+    boolean park = false;
 
 
     @Override
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         ID = getIntent().getStringExtra("ID");
         parkingPoint = new ArrayList<>();
-        new ParkingPointLoad().execute();
+        new ParkingPointLoad().execute();//주차칸 내부 정보 수정됬을시 추가해해야됨/////////////////////////////////
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -104,13 +112,23 @@ public class MainActivity extends AppCompatActivity {
 
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                int ab = 0;
                 while (true) {
                     try {
+
                         //posy+=10;
                         //new test().execute();
-                        Thread.sleep(10000);
+                        Thread.sleep(1000);
                         new UserPosLoad().execute();
+
+                        runOnUiThread(new Runnable(){
+                            @Override
+                            public void run() {
+                                CheckPark();
+                            }
+                        });
+                        //차량이 주차완료됬는지 체크해야됨
+
+
                         //데이터 받아와야됨
                     } catch (Throwable t) {
                     }
@@ -120,6 +138,52 @@ public class MainActivity extends AppCompatActivity {
 
         myThread.start();
     }
+
+    void CheckPark(){
+
+        if(stop) return;
+        TextView target_tv = null;
+        reserv = reserv;
+        for(int i = 0; i<tvList.size(); i++){
+            if(Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3)) == reserv){
+                target_tv = tvList.get(i);
+                break;
+            }
+        }
+        target_tv = target_tv;
+
+        if(check >= 5){
+            stop = true;
+            //다이얼로그 생성
+
+            parkingDialog = new ParkingDialog(context, parkingDialog_OkClickListener);
+            parkingDialog.setCancelable(true);
+            parkingDialog.getWindow().setGravity(Gravity.CENTER);
+            parkingDialog.show();
+
+
+
+
+            //path삭제
+            return;
+        }
+        if(target_tv == null) return;
+        String[] tmp = target_tv.getHint().toString().split("/");
+        kx = (Integer.parseInt(tmp[0])*(width-fragLeft-fragRight))/maxWidth + fragLeft;
+        ky = (Integer.parseInt(tmp[1])*(height-fragTop-fragBottom))/maxHeight + fragTop;
+        if(dCarX >= kx && dCarX <= kx + lenX && dCarY >= ky && dCarY <= ky + lenY)//차량위치
+            check++;
+        else
+            check = 0;
+    }
+
+
+
+    private View.OnClickListener parkingDialog_OkClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            parkingDialog.dismiss();
+        }
+    };
 
     void Print(){
         posX = posX;
@@ -161,9 +225,16 @@ public class MainActivity extends AppCompatActivity {
             parkingPoint.get(i).index = point;
             layoutParams.setMargins((px *(width-fragLeft-fragRight))/maxWidth + fragLeft, (py *(height-fragTop-fragBottom))/maxHeight + fragTop, 0, 0);
             tv.setLayoutParams(layoutParams);
-            tv.setHint(Integer.toString(occupy) + Integer.toString(point));
-            tv.setText(tv.getHint().toString()+Integer.toString(i+1));
-            //tv.setHintTextColor(Color.alpha(0));
+            if(point<10)
+                tv.setHint(Integer.toString(occupy) + "0" + Integer.toString(point));
+            else
+                tv.setHint(Integer.toString(occupy) + Integer.toString(point));
+            if(i<9)
+                tv.setText(tv.getHint().toString()+"0"+Integer.toString(i+1));
+            else
+                tv.setText(tv.getHint().toString()+Integer.toString(i+1));
+            tv.setHintTextColor(Color.alpha(0));
+            tv.setHint(Integer.toString(px) + "/" + Integer.toString(py));
             tv.setTextSize(20);
             switch(occupy){
                 case 0:
@@ -183,13 +254,13 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String a = tv.getHint().toString();
                     reserv = reserv;
-                    if(tv.getHint().toString().substring(0, 1).equals("0")
-                            && !tv.getHint().toString().substring(1).equals(Integer.toString(reserv))){
+                    if((tv.getText().toString().substring(0, 1).equals("0")
+                            && Integer.parseInt(tv.getText().toString().substring(1, 3))!=reserv) || reserv == -1){
 
 
 
                         //Dialog
-                        reservationDialog = new ReservationDialog(context, tv, plusBillDialog_OkClickListener, plusBillDialog_CancelClickListener);
+                        reservationDialog = new ReservationDialog(context, tv, reservationDialog_OkClickListener, reservationDialog_CancelClickListener);
                         reservationDialog.setCancelable(true);
                         reservationDialog.getWindow().setGravity(Gravity.CENTER);
                         reservationDialog.show();
@@ -208,23 +279,23 @@ public class MainActivity extends AppCompatActivity {
         tvList = tvList;
     }
 
-    private View.OnClickListener plusBillDialog_OkClickListener = new View.OnClickListener() {
+    private View.OnClickListener reservationDialog_OkClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             TextView tv = reservationDialog.getTextView();
 
             tv.setBackgroundResource(R.drawable.edge_myreversation);
-            tv.setHint(Integer.toString(2) + tv.getHint().toString().substring(1));
+            tv.setText(Integer.toString(2) + tv.getText().toString().substring(1));
             if(tv_click != null){
                 tv_click.setBackgroundResource(R.drawable.edge_empty);
-                tv_click.setHint(Integer.toString(0) + tv_click.getHint().toString().substring(1));
+                tv_click.setText(Integer.toString(0) + tv_click.getText().toString().substring(1));
 
                 SetParkingPointReservation a = new SetParkingPointReservation();
                 a.setOccupy(0);
-                a.setTargetPoint(Integer.parseInt(tv_click.getHint().toString().substring(1)));
+                a.setTargetPoint(Integer.parseInt(tv_click.getText().toString().substring(1, 3)));
                 a.execute();
             }
             tv_click = tv;
-            reserv = Integer.parseInt(tv.getHint().toString().substring(1));
+            reserv = Integer.parseInt(tv.getText().toString().substring(1, 3));
 
 
             SetParkingPointReservation a = new SetParkingPointReservation();
@@ -234,12 +305,17 @@ public class MainActivity extends AppCompatActivity {
             a.execute();
 
             reservationDialog.dismiss();
+
+
+            stop = false;
+            check = 0;
         }
     };
 
-    private View.OnClickListener plusBillDialog_CancelClickListener = new View.OnClickListener() {
+    private View.OnClickListener reservationDialog_CancelClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             reservationDialog.dismiss();
+            park = true;
         }
     };
 
@@ -318,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 SortParkingPoint();
                 Print();//출력함수
-                Reservation(0);
+                //Reservation(0);
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -383,11 +459,23 @@ public class MainActivity extends AppCompatActivity {
                     count++;
                 }
 
+
+                //차량이 화면내부에 없으면 return
+
+                if(!(carX >=0 && carX <= maxWidth && carY >= 0 && carY <= maxHeight)){
+
+                    if(im != null) im.setVisibility(View.INVISIBLE);
+                    return;
+                }
+
+                if(im != null) im.setVisibility(View.VISIBLE);
+
+
                 int point = 0;
                 reserv = reserv;
                 for(int i =0; i<tvList.size(); i++){
-                    if(tvList.get(i).getHint().toString().substring(1).equals(Integer.toString(reserv))){
-                        point = Integer.parseInt(tvList.get(i).getHint().toString().substring(1));
+                    if(Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3))==reserv){
+                        point = Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3));
                         break;
                     }
                 }
@@ -408,8 +496,8 @@ public class MainActivity extends AppCompatActivity {
                 dCarX = ChangeRate(0, carX);
                 dCarY = ChangeRate(1, carY);
                 Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_car);
-                int w = image.getWidth();
-                int h = image.getHeight();
+                int w = 96;//image.getWidth();
+                int h = 96;//image.getHeight();
 
 
                 //dd위치 조정 배치에 따라서 수선
@@ -442,6 +530,24 @@ public class MainActivity extends AppCompatActivity {
                 im.setImageResource(R.drawable.ic_car);
                 topLL.removeView(im);
                 topLL.addView(im);
+
+
+
+                //맨처음 시작할때
+                //주차 완료시
+
+                dCarX = dCarX;
+                dCarY = dCarY;
+                ddCarX = ddCarX;
+                ddCarY = ddCarY;
+                if (stop || (dCarX >= kx && dCarX <= kx + lenX && dCarY >= ky && dCarY <= ky + lenY)){//길찾기 그리는부분
+                    Path.clear();
+                    return;
+                }
+
+
+
+
                 dijkstra = new Dijkstra();
                 dijkstra.INIT(6);
                 if(DistanceInt(new Point(ddCarX, ddCarY), new Point(revx, revHy))< ChangeRateNo(0, pWidth * 2)){
