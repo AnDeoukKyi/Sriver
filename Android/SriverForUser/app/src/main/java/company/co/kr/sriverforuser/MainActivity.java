@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         String[] tmp = target_tv.getHint().toString().split("/");
         kx = (Integer.parseInt(tmp[0])*(width-fragLeft-fragRight))/maxWidth + fragLeft;
         ky = (Integer.parseInt(tmp[1])*(height-fragTop-fragBottom))/maxHeight + fragTop;
-        if(dCarX >= kx && dCarX <= kx + lenX && dCarY >= ky && dCarY <= ky + lenY)//차량위치
+        if(dCarX > kx && dCarX < kx + lenX && dCarY > ky && dCarY < ky + lenY)//차량위치
             check++;
         else
             check = 0;
@@ -193,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
             if(rposX.get(k) == 1) c++;
         c = c;
         rposY =rposY;
+
+        parkingPoint = parkingPoint;
         for(int i = 0; i<parkingPoint.size(); i++) {
             int pointp = parkingPoint.get(i).point - 1;//번호
             int occupy = parkingPoint.get(i).occupy;//점유
@@ -225,10 +227,10 @@ public class MainActivity extends AppCompatActivity {
             parkingPoint.get(i).index = point;
             layoutParams.setMargins((px *(width-fragLeft-fragRight))/maxWidth + fragLeft, (py *(height-fragTop-fragBottom))/maxHeight + fragTop, 0, 0);
             tv.setLayoutParams(layoutParams);
-            if(point<10)
-                tv.setHint(Integer.toString(occupy) + "0" + Integer.toString(point));
+            if(point<9)
+                tv.setHint(Integer.toString(occupy) + "0" + Integer.toString(point+1));
             else
-                tv.setHint(Integer.toString(occupy) + Integer.toString(point));
+                tv.setHint(Integer.toString(occupy) + Integer.toString(point+1));
             if(i<9)
                 tv.setText(tv.getHint().toString()+"0"+Integer.toString(i+1));
             else
@@ -475,7 +477,7 @@ public class MainActivity extends AppCompatActivity {
                 reserv = reserv;
                 for(int i =0; i<tvList.size(); i++){
                     if(Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3))==reserv){
-                        point = Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3));
+                        point = Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3))-1;
                         break;
                     }
                 }
@@ -600,7 +602,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(
                         (ddCarX >= crossPoint.get(0).startX + crossPoint.get(0).getWidth() && ddCarX <= crossPoint.get(3).startX)
-                                || (dCarY >= crossPoint.get(0).startY + crossPoint.get(0).getHeight() && dCarY <= crossPoint.get(3).startY)
+                                || (ddCarY >= crossPoint.get(0).startY + crossPoint.get(0).getHeight() && ddCarY <= crossPoint.get(3).startY)
                         ){
 
                     if (ddCarX >= crossPoint.get(0).startX + crossPoint.get(0).getWidth() && ddCarX <= crossPoint.get(3).startX){
@@ -773,7 +775,7 @@ public class MainActivity extends AppCompatActivity {
         p = p;
         Path.clear();
         Path.add(new Point(dCarX, dCarY));
-        //Path.add(new Point(ddCarX, ddCarY));
+        Path.add(new Point(ddCarX, ddCarY));
         crossPoint = crossPoint;
         for(int i = 0; i<p.size(); i++){
             if(p.get(i) >= 1 && p.get(i) <= 4){
