@@ -182,6 +182,11 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener parkingDialog_OkClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             parkingDialog.dismiss();
+            SetParkingPointReservation a = new SetParkingPointReservation();
+            a.setOccupy(2);
+            a.setTargetPoint(reserv);
+            a.setTargetID(ID);
+            a.execute();
         }
     };
 
