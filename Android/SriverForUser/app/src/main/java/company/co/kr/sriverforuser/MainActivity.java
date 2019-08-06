@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
     String ID;
     int width;
     int height;
-    int fragTop = 200;
-    int fragBottom = 200;
-    int fragLeft = 100;
-    int fragRight = 100;
+    int fragTop = 100;
+    int fragBottom = 100;
+    int fragLeft = 10;
+    int fragRight = 10;
     int maxWidth, maxHeight;
     int kx = 0, ky = 0;
     int totalStartX = 0, totalStartY = 0, totalLenX = 0, totalLenY = 0;
@@ -117,13 +117,15 @@ public class MainActivity extends AppCompatActivity {
 
                         //posy+=10;
                         //new test().execute();
-                        Thread.sleep(1000);
                         new UserPosLoad().execute();
-
+                        new ParkingPointSync().execute();
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable(){
                             @Override
                             public void run() {
                                 CheckPark();
+                                reserv = reserv;
+                                ChangeParkingPoint();
                             }
                         });
                         //차량이 주차완료됬는지 체크해야됨
@@ -139,6 +141,42 @@ public class MainActivity extends AppCompatActivity {
         myThread.start();
     }
 
+
+    void ChangeParkingPoint(){
+        tvList = tvList;
+        for(int i = 0; i<tvList.size(); i++){
+            for(int j = 0; j<parkingPoint.size(); j++){
+                if(parkingPoint.get(j).point == Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3))){
+                    tvList.get(i).setText(parkingPoint.get(j).occupy+tvList.get(i).getText().toString().substring(1));
+                    break;
+                }
+            }
+        }
+        for(int j = 0; j<tvList.size(); j++){
+            switch(Integer.parseInt(tvList.get(j).getText().toString().substring(0, 1))){
+                case 0://empty
+                    tvList.get(j).setBackgroundResource(R.drawable.edge_empty);
+                    break;
+                case 1://reservation
+                    if(Integer.parseInt(tvList.get(j).getText().toString().substring(1, 3)) == reserv)
+                        if(stop)
+                            tvList.get(j).setBackgroundResource(R.drawable.edge_myparking);
+                        else
+                            tvList.get(j).setBackgroundResource(R.drawable.edge_myreversation);
+                    else
+                        tvList.get(j).setBackgroundResource(R.drawable.edge_noparking);
+                    break;
+                case 2://parking
+                    if(Integer.parseInt(tvList.get(j).getText().toString().substring(1, 3)) == reserv)
+                        tvList.get(j).setBackgroundResource(R.drawable.edge_myparking);
+                    else
+                        tvList.get(j).setBackgroundResource(R.drawable.edge_noparking);
+                    break;
+            }
+        }
+
+
+    }
     void CheckPark(){
 
         if(stop) return;
@@ -152,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         }
         target_tv = target_tv;
 
-        if(check >= 5){
+        if(check >= 50){
             stop = true;
             //다이얼로그 생성
 
@@ -240,18 +278,24 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(tv.getHint().toString()+"0"+Integer.toString(i+1));
             else
                 tv.setText(tv.getHint().toString()+Integer.toString(i+1));
-            tv.setHintTextColor(Color.alpha(0));
+            //tv.setTextColor(Color.alpha(0));
             tv.setHint(Integer.toString(px) + "/" + Integer.toString(py));
-            tv.setTextSize(20);
+            tv.setTextSize(10);
             switch(occupy){
-                case 0:
+                case 0://empty
                     tv.setBackgroundResource(R.drawable.edge_empty);
                     break;
-                case 1:
-                    tv.setBackgroundResource(R.drawable.edge_reversation);
+                case 1://reservation
+                    if(Integer.parseInt(tv.getText().toString().substring(1, 3)) == reserv)
+                        tv.setBackgroundResource(R.drawable.edge_myreversation);
+                    else
+                        tv.setBackgroundResource(R.drawable.edge_noparking);
                     break;
-                case 2:
-                    tv.setBackgroundResource(R.drawable.edge_occupy);
+                case 2://parking
+                    if(Integer.parseInt(tv.getText().toString().substring(1, 3)) == reserv)
+                        tv.setBackgroundResource(R.drawable.edge_myparking);
+                    else
+                        tv.setBackgroundResource(R.drawable.edge_noparking);
                     break;
             }
 
@@ -259,8 +303,6 @@ public class MainActivity extends AppCompatActivity {
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String a = tv.getHint().toString();
-                    reserv = reserv;
                     if((tv.getText().toString().substring(0, 1).equals("0")
                             && Integer.parseInt(tv.getText().toString().substring(1, 3))!=reserv) || reserv == -1){
 
@@ -290,8 +332,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             TextView tv = reservationDialog.getTextView();
 
-            tv.setBackgroundResource(R.drawable.edge_myreversation);
-            tv.setText(Integer.toString(2) + tv.getText().toString().substring(1));
+            //무조건 바뀌면 안됨
             if(tv_click != null){
                 tv_click.setBackgroundResource(R.drawable.edge_empty);
                 tv_click.setText(Integer.toString(0) + tv_click.getText().toString().substring(1));
@@ -325,8 +366,6 @@ public class MainActivity extends AppCompatActivity {
             park = true;
         }
     };
-
-
 
     class ParkingPointLoad extends AsyncTask<Void, Void, String> {
         String target;
@@ -402,6 +441,81 @@ public class MainActivity extends AppCompatActivity {
                 SortParkingPoint();
                 Print();//출력함수
                 //Reservation(0);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    class ParkingPointSync extends AsyncTask<Void, Void, String> {
+        String target;
+        @Override
+        protected void onPreExecute(){//연결
+            try{
+                target = "http://nejoo97.cafe24.com/ParkingPoint.php";
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {//데이터읽어오기
+            try{
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while((temp = bufferReader.readLine())!=null){
+                    stringBuilder.append(temp+"\n");
+                }
+                bufferReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        public void onPostExecute(String result){//공지사항리스트에 연결
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+
+                int point, occupy;
+                while(count<jsonArray.length()){
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    point = object.getInt("POINT");
+                    occupy = object.getInt("OCCUPY");
+                    if(count != 0) {
+                        if(count != jsonArray.length()-1){
+                            for(int i = 0; i<parkingPoint.size(); i++){
+                                if(parkingPoint.get(i).point == point){
+                                    if(parkingPoint.get(i).occupy != occupy){
+                                        parkingPoint.get(i).occupy = occupy;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    count++;
+                }
             }
             catch(Exception e){
                 e.printStackTrace();

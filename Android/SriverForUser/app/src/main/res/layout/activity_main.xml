@@ -6,16 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="#ffffff"
+    android:background="#6cbb76"
     android:id="@+id/layout_Main">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <company.co.kr.sriverforuser.Draw
             android:id="@+id/customView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"/>
+            android:background="#6cbb76" />
     </FrameLayout>
     <RelativeLayout
         android:id="@+id/layout_Title"
@@ -55,7 +56,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"/>
-    </RelativeLayout>
 
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/colorWhite"
+        android:layout_below="@+id/layout_Title"
+
+        />
 
 </RelativeLayout>

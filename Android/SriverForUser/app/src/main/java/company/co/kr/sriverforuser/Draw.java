@@ -37,7 +37,7 @@ public class Draw extends View {
 
 
         paint.setColor(Color.RED); // 빨간색으로 설정
-        paint.setStrokeWidth(20);
+        paint.setStrokeWidth(10);
         ArrayList<Point> p = MainActivity.Path;
         for(int i = 0; i<p.size()-1; i++)
             canvas.drawLine(p.get(i).x, p.get(i).y, p.get(i+1).x, p.get(i+1).y, paint);
