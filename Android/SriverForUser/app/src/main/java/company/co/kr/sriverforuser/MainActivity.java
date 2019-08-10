@@ -91,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
         ID = getIntent().getStringExtra("ID");
         parkingPoint = new ArrayList<>();
 
-        ChangeFlag changeFlag = new ChangeFlag();
-        changeFlag.SetFlag(1);
-        changeFlag.execute();
+
+
         new ParkingPointLoad().execute();//주차칸 내부 정보 수정됬을시 추가해해야됨/////////////////////////////////
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -422,6 +421,93 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    class CheckFlag extends AsyncTask<Void, Void, String> {
+        String target;
+        @Override
+        protected void onPreExecute(){//연결
+            try{
+                target = "http://nejoo97.cafe24.com/ParkingPoint.php?ID="+ID;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {//데이터읽어오기
+            try{
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while((temp = bufferReader.readLine())!=null){
+                    stringBuilder.append(temp+"\n");
+                }
+                bufferReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        public void onPostExecute(String result){//공지사항리스트에 연결
+            try{
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                int count = 0;
+
+                int point, occupy, startX, startY;
+                String id;
+                while(count<jsonArray.length()){
+                    JSONObject object = jsonArray.getJSONObject(count);
+                    point = object.getInt("POINT");
+                    occupy = object.getInt("OCCUPY");
+                    startX = object.getInt("STARTX");
+                    startY = object.getInt("STARTY");
+                    id = object.getString("ID");
+                    if(count == 0) {
+                        maxWidth = startX;
+                        maxHeight = startY;
+                    }
+                    else {
+                        if(count != jsonArray.length()-1) {
+                            parkingPoint.add(new ParkingPoint(point, occupy, startX, startY));
+                            if(ID.equals(id)){
+                                reserv = point;
+                                start = true;
+                            }
+                        }
+                        else{
+                            pWidth = startX;
+                            pHeight = startY;
+                        }
+
+                    }
+                    count++;
+                }
+                SortParkingPoint();
+                Print();//출력함수
+                //Reservation(0);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
     class ParkingPointLoad extends AsyncTask<Void, Void, String> {
         String target;
@@ -500,6 +586,11 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     count++;
+                }
+                if(!start){
+                    ChangeFlag changeFlag = new ChangeFlag();
+                    changeFlag.SetFlag(1);
+                    changeFlag.execute();
                 }
                 SortParkingPoint();
                 Print();//출력함수
