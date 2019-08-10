@@ -1,20 +1,17 @@
-<?php
+﻿<?php
  	header("Connect-Type: text/html; charset=UTF-8");
 	$con = mysqli_connect("localhost","nejoo97","njeunjoo1997!","nejoo97");
 
-    $FLAG = $_GET["FLAG"];
 
-	$statement = mysqli_prepare($con, "SELECT ID FROM MEMBER WHERE FLAG = 1");
+	$result = mysqli_query($con, "SELECT ID FROM MEMBER WHERE FLAG = 1");
 
-
-	mysqli_stmt_execute($statement);
-	mysqli_stmt_store_result($statement);
-	mysqli_stmt_bind_result($statement,$ID);
 
 	$response = array();
-	$response["ID"] = $ID; //성공 
+    	while($row = mysqli_fetch_array($result)){
+        	array_push($response, array("ID"=>$row[0]));
+    	}
 
- 	echo json_encode($response); //성공 됨을 응답
+ 	echo json_encode(array("response"=>$response), JSON_UNESCAPED_UNICODE);
     mysqli_close($con);
 ?>
 

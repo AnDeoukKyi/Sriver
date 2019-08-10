@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     int check  = 0;
     boolean stop = true;
     boolean park = false;
-
+    boolean start = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         ID = getIntent().getStringExtra("ID");
         parkingPoint = new ArrayList<>();
+
+        ChangeFlag changeFlag = new ChangeFlag();
+        changeFlag.SetFlag(1);
+        changeFlag.execute();
         new ParkingPointLoad().execute();//주차칸 내부 정보 수정됬을시 추가해해야됨/////////////////////////////////
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -199,7 +203,11 @@ public class MainActivity extends AppCompatActivity {
             parkingDialog.getWindow().setGravity(Gravity.CENTER);
             parkingDialog.show();
 
-
+            SetParkingPointReservation a = new SetParkingPointReservation();
+            a.setOccupy(2);
+            a.setTargetPoint(reserv);
+            a.setTargetID(ID);
+            a.execute();
 
 
             //path삭제
@@ -220,11 +228,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener parkingDialog_OkClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             parkingDialog.dismiss();
-            SetParkingPointReservation a = new SetParkingPointReservation();
-            a.setOccupy(2);
-            a.setTargetPoint(reserv);
-            a.setTargetID(ID);
-            a.execute();
+
         }
     };
 
@@ -278,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(tv.getHint().toString()+"0"+Integer.toString(i+1));
             else
                 tv.setText(tv.getHint().toString()+Integer.toString(i+1));
-            //tv.setTextColor(Color.alpha(0));
+            tv.setTextColor(Color.alpha(0));
             tv.setHint(Integer.toString(px) + "/" + Integer.toString(py));
             tv.setTextSize(10);
             switch(occupy){
@@ -367,6 +371,58 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    class ChangeFlag extends AsyncTask<Void, Void, String> {
+        String target;
+        int flag;
+        void SetFlag(int f){
+            flag = f;
+        }
+        @Override
+        protected void onPreExecute(){//연결
+            try{
+                target = "http://nejoo97.cafe24.com/FlagMember.php?ID="+ID + "&FLAG=" + flag;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {//데이터읽어오기
+            try{
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while((temp = bufferReader.readLine())!=null){
+                    stringBuilder.append(temp+"\n");
+                }
+                bufferReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        public void onProgressUpdate(Void... values){
+            super.onProgressUpdate();
+        }
+
+        @Override
+        public void onPostExecute(String result) {//공지사항리스트에 연결
+        }
+    }
+
+
     class ParkingPointLoad extends AsyncTask<Void, Void, String> {
         String target;
         @Override
@@ -417,19 +473,26 @@ public class MainActivity extends AppCompatActivity {
                 int count = 0;
 
                 int point, occupy, startX, startY;
+                String id;
                 while(count<jsonArray.length()){
                     JSONObject object = jsonArray.getJSONObject(count);
                     point = object.getInt("POINT");
                     occupy = object.getInt("OCCUPY");
                     startX = object.getInt("STARTX");
                     startY = object.getInt("STARTY");
+                    id = object.getString("ID");
                     if(count == 0) {
                         maxWidth = startX;
                         maxHeight = startY;
                     }
                     else {
-                        if(count != jsonArray.length()-1)
+                        if(count != jsonArray.length()-1) {
                             parkingPoint.add(new ParkingPoint(point, occupy, startX, startY));
+                            if(ID.equals(id)){
+                                reserv = point;
+                                start = true;
+                            }
+                        }
                         else{
                             pWidth = startX;
                             pHeight = startY;
@@ -597,6 +660,10 @@ public class MainActivity extends AppCompatActivity {
                 for(int i =0; i<tvList.size(); i++){
                     if(Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3))==reserv){
                         point = Integer.parseInt(tvList.get(i).getText().toString().substring(1, 3))-1;
+                        if(reserv != -1 && start){
+                            tv_click = tvList.get(i);
+                            start = false;
+                        }
                         break;
                     }
                 }
