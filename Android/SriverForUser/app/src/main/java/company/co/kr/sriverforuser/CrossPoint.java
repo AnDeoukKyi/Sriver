@@ -1,39 +1,30 @@
 package company.co.kr.sriverforuser;
 
-import android.graphics.Point;
 
 public class CrossPoint {
-    Point p;
+    int dijID;
+    int xIndex;
+    int yIndex;
     int startX;
     int startY;
+    int endX;
+    int endY;
     int width;
     int height;
+    int centerX;
+    int centerY;
 
-    public CrossPoint(Point p, int startX, int startY, int width, int height) {
-        this.p = p;
+    public CrossPoint(int xIndex, int yIndex, int startX, int startY, int endX, int endY) {
+        this.xIndex = xIndex;
+        this.yIndex = yIndex;
         this.startX = startX;
         this.startY = startY;
-        this.width = width;
-        this.height = height;
+        this.endX = endX;
+        this.endY = endY;
+        width = endX - startX;
+        height = endY - startY;
+        centerX = startX + width/2;
+        centerY = startY + height/2;
     }
 
-    public Point getPoint() {
-        return p;
-    }
-
-    public int getStartX() {
-        return startX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 }

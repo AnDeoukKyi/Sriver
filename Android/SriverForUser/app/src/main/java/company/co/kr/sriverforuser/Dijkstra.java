@@ -4,17 +4,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
-public class Dijkstra {
-    int INF = 987654321;
+public class Dijkstra implements Cloneable{
+    int INF = 1234567;
     int[][] LEN;
     int[] dist;
     boolean[] visited;
     int[] prev;
     int N;
-    Vector<Integer> steps = new Vector<Integer>();
+    Vector<Integer> steps = new Vector<>();
 
     //호출순서
     //INIT->CONNECTNODE or DONNECT->SEARCHPATH
+
+    public Dijkstra copy(){
+        Dijkstra copy = new Dijkstra();
+        copy.N = this.N;
+        int INF = this.INF;
+        copy.LEN = new int[N][N];
+        for(int i = 0; i<N; i++)
+            for(int j = 0; j<N; j++)
+                copy.LEN[i][j] = this.LEN[i][j];
+
+        copy.dist = new int[N];
+        for(int i = 0; i<N; i++)
+            copy.dist[i] = this.dist[i];
+
+        copy.visited = new boolean[N];
+        for(int i = 0; i<N; i++)
+            copy.visited[i] = this.visited[i];
+
+        copy.prev = new int[N];
+        for(int i = 0; i<N; i++)
+            copy.prev[i] = this.prev[i];
+        copy.steps = new Vector<>();
+        return copy;
+    }
 
     public void INIT(int n){
         this.N = n;
@@ -87,11 +111,11 @@ public class Dijkstra {
     }
 
 
-    public ArrayList<Integer> SEARCHPATH(){
+    public ArrayList<Integer> SEARCHPATH(int endIndex){
         ArrayList<Integer> path = new ArrayList<>();
         dist[0] = 0;
-        shortestPath(0,N-1);
-        makingPath(0,N-1,N-1);
+        shortestPath(0,endIndex);
+        makingPath(0,endIndex,endIndex);
         for(int node : steps){
             path.add(node);
         }

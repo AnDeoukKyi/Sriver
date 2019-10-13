@@ -7,8 +7,10 @@
     $OCCUPY = $_GET["OCCUPY"];
     $STARTX = $_GET["STARTX"];
     $STARTY = $_GET["STARTY"];
+    $LENX = $_GET["LENX"];
+    $LENY = $_GET["LENY"];
 
-    $result = mysqli_query($con, "INSERT INTO PARKINGPOINT VALUES ($POINT, $OCCUPY, $STARTX, $STARTY, 'NULL')");
+    $result = mysqli_query($con, "INSERT INTO PARKINGPOINT VALUES ($POINT, $OCCUPY, $STARTX, $STARTY, $LENX, $LENY, 'NULL')");
 
 
     mysqli_stmt_execute($result);

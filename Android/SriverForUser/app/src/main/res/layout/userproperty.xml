@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#024741"
+    android:background="#045c55"
     android:orientation="vertical"
     >
 
@@ -13,7 +13,7 @@
         android:layout_height="100dp"
         android:background="@drawable/logo"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_centerInParent="true"
         android:layout_alignParentTop="true"/>
     <LinearLayout
@@ -30,13 +30,13 @@
             android:layout_height="wrap_content"
             android:text="YouJin9898"
             android:fontFamily="@font/koolbean"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 님"
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="25dp"/>
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         android:layout_height="2dp"
         android:background="@color/colorWhite"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="50dp"
         android:layout_centerInParent="true"
         android:layout_below="@+id/idInformation"
         />
@@ -54,10 +54,10 @@
         android:id="@+id/carTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CAR : "
+        android:text="CAR NUMBER"
         android:fontFamily="@font/koolbean"
-        android:textSize="20dp"
-        android:layout_marginBottom="10dp"
+        android:textSize="25dp"
+        android:layout_marginBottom="15dp"
         android:layout_centerInParent="true"
         android:layout_below="@+id/aLine"/>
     <TextView
@@ -66,19 +66,29 @@
         android:layout_height="wrap_content"
         android:text="서울 18가 1234"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_centerInParent="true"
         android:layout_below="@+id/carTitle"/>
 
     <TextView
         android:id="@+id/tv_UserProperty_LogOut"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="로그아웃"
+        android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
+        android:layout_centerInParent="true"
         android:layout_below="@+id/carName"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="version.04 (2019.08.10)"
+        android:textSize="15dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/tv_UserProperty_LogOut"
+        android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>

@@ -1,48 +1,20 @@
 package company.co.kr.sriverforuser;
 
+import android.widget.TextView;
+
 public class ParkingPoint {
-    int point;
+    int index;
     int occupy;
     int startX;
     int startY;
-    int index;
+    String id;
+    TextView tv;
 
-    public ParkingPoint(int point, int occupy, int startX, int startY) {
-        this.point = point;
+    public ParkingPoint(int index, int occupy, int startX, int startY, String id) {
+        this.index = index;
         this.occupy = occupy;
         this.startX = startX;
         this.startY = startY;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    public int getOccupy() {
-        return occupy;
-    }
-
-    public void setOccupy(int occupy) {
-        this.occupy = occupy;
-    }
-
-    public int getStartX() {
-        return startX;
-    }
-
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
+        this.id = id;
     }
 }

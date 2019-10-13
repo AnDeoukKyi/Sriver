@@ -22,6 +22,9 @@ public class Draw extends View {
 
     public Draw(Context context, AttributeSet attrs) {
         super(context, attrs);
+        paint = new Paint(); // 페인트 객체 생성
+        paint.setColor(Color.RED); // 빨간색으로 설정
+        paint.setStrokeWidth(10);
     }
 
     /**
@@ -31,27 +34,18 @@ public class Draw extends View {
     @Override
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
-
-        final Paint paint = new Paint(); // 페인트 객체 생성
-
-
-
-        paint.setColor(Color.RED); // 빨간색으로 설정
-        paint.setStrokeWidth(10);
-        ArrayList<Point> p = MainActivity.Path;
-        for(int i = 0; i<p.size()-1; i++)
+        ArrayList<Point> p = MainActivity.path;
+        for(int i = 0; i<MainActivity.path.size()-1; i++)
             canvas.drawLine(p.get(i).x, p.get(i).y, p.get(i+1).x, p.get(i+1).y, paint);
+
+
+//        canvas.drawLine(0, MainActivity.marTop, MainActivity.windowWidth, MainActivity.marTop, paint);
+//        canvas.drawLine(0, MainActivity.windowHeight - MainActivity.marBottom, MainActivity.windowWidth, MainActivity.windowHeight - MainActivity.marBottom, paint);
+//        canvas.drawLine(MainActivity.marLeft, 0, MainActivity.marLeft, MainActivity.windowHeight, paint);
+//        canvas.drawLine(MainActivity.windowWidth - MainActivity.marRight, 0, MainActivity.windowWidth - MainActivity.marRight, MainActivity.windowHeight, paint);
+//        ArrayList<Point> p = MainActivity.Path;
+//        for(int i = 0; i<p.size()-1; i++)
+//            canvas.drawLine(p.get(i).x, p.get(i).y, p.get(i+1).x, p.get(i+1).y, paint);
         invalidate();
-    }
-
-    /**
-     * 터치 이벤트를 처리
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        return true;
     }
 }
