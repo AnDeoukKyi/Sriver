@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     int reserve = -1;//예약
     int pMaxWidth, pMaxHeight;//제일큰 주차장
     int pWidth, pHeight;//평균 주차칸
+    int pStartX, pStartY;//평균 주차칸
     int pCountX, pCountY;//x,y개수
     int step = 0, maxStep = 2;
     //new ParkingPointLoad().execute();//주차장 정보 받아옴 step++
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     int maxCrossPointIndexX, maxCrossPointIndexY;
     int parkingTime = 0;
     boolean park = false;
+    int parkIndex;
 
 
 
@@ -97,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         Thread myThread = new Thread(new Runnable() {
             public void run() {
                 while (true) {
-                    Log.e("parkingTime", Integer.toString(parkingTime));
                     try {
                         if(flag != 2){
                             if(flag == -1)//맨처음 시작
@@ -492,34 +493,65 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+
     void checkParking(){
 
-        if(parkingTime > 50 && !park){
+        if(parkingTime > 200 && !park){
             park = true;
-            for(int i = 0; i<parkingPoint.size(); i++){
-                if(parkingPoint.get(i).index == reserve){
-                    parkingPoint.get(i).tv.setBackgroundResource(R.drawable.edge_myparking);
-                    break;
-                }
-            }
-            new SetParkingPointReservation(reserve, 2, ID).execute();
+            path.clear();
+            parkingPoint.get(parkIndex).tv.setBackgroundResource(R.drawable.edge_myparking);
+            if(parkIndex != reserve)
+                new SetParkingPointReservation(reserve, 0, "NULL").execute();
+            new SetParkingPointReservation(parkingPoint.get(parkIndex).index, 2, ID).execute();
             parkingDialog = new ParkingDialog(context, parkingDialog_OkClickListener);
             parkingDialog.setCancelable(true);
             parkingDialog.getWindow().setGravity(Gravity.CENTER);
             parkingDialog.show();
             return;
         }
+        if(checkInParkingPoint() != -1){
+            parkIndex = checkInParkingPoint();
+            parkingTime++;
+        }
+    }
+
+    int checkInParkingPoint(){
         for(int i = 0; i<parkingPoint.size(); i++){
-            if(parkingPoint.get(i).index == reserve){
-                ParkingPoint pp = parkingPoint.get(i);
-                if(carX > rateLengthX(pp.startX) && carX < rateLengthX(pp.startX) + rateLengthWidth() && carY > rateLengthY(pp.startY) && carY < rateLengthY(pp.startY) + rateLengthHeight()){
-                    parkingTime++;
-                }
-                break;
+            if(carX > rateLengthX(parkingPoint.get(i).startX) && carX < rateLengthX(parkingPoint.get(i).startX) + rateLengthWidth() && carY > rateLengthY(parkingPoint.get(i).startY) && carY < rateLengthY(parkingPoint.get(i).startY) + rateLengthHeight()){
+                return i;
             }
         }
-
+        return -1;
     }
+
+//    void checkParking(){
+//
+//        if(parkingTime > 50 && !park){
+//            park = true;
+//            for(int i = 0; i<parkingPoint.size(); i++){
+//                if(parkingPoint.get(i).index == reserve){
+//                    parkingPoint.get(i).tv.setBackgroundResource(R.drawable.edge_myparking);
+//                    break;
+//                }
+//            }
+//            new SetParkingPointReservation(reserve, 2, ID).execute();
+//            parkingDialog = new ParkingDialog(context, parkingDialog_OkClickListener);
+//            parkingDialog.setCancelable(true);
+//            parkingDialog.getWindow().setGravity(Gravity.CENTER);
+//            parkingDialog.show();
+//            return;
+//        }
+//        for(int i = 0; i<parkingPoint.size(); i++){
+//            if(parkingPoint.get(i).index == reserve){
+//                ParkingPoint pp = parkingPoint.get(i);
+//                if(carX > rateLengthX(pp.startX) && carX < rateLengthX(pp.startX) + rateLengthWidth() && carY > rateLengthY(pp.startY) && carY < rateLengthY(pp.startY) + rateLengthHeight()){
+//                    parkingTime++;
+//                }
+//                break;
+//            }
+//        }
+//
+//    }
 
     int distance(int x1, int y1, int x2, int y2){
         return (int)(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)));
@@ -868,6 +900,8 @@ public class MainActivity extends AppCompatActivity {
                     lenY = object.getInt("LENY");
                     id = object.getString("ID");
                     if (count == 0) {//제일큰 사각형 가로 세로길이
+                        pStartX = startX;
+                        pStartY = startY;
                         pMaxWidth = lenX;
                         pMaxHeight = lenY;
                     } else {
@@ -1153,14 +1187,18 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
+                int x = 0, y = 0;
                 while(count<jsonArray.length()){
                     JSONObject object = jsonArray.getJSONObject(count);
-                    carX = rateLengthX(object.getInt("POSX"));
-                    carY = rateLengthY(object.getInt("POSY"));
+                    x = object.getInt("POSX");
+                    y = object.getInt("POSY");
+                    carX = rateLengthX(x);
+                    carY = rateLengthY(y);
                     count++;
                 }
                 if(init == 0) step++;
                 else{
+                    if(x<=0 || y <= 0)return;
                     SetCarImage(carX, carY);
                     if(reserve != -1 && !park){
                         setDCar();

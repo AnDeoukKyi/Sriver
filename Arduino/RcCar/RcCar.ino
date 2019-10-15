@@ -1,33 +1,33 @@
-﻿ #include <SoftwareSerial.h>
+#include <SoftwareSerial.h>
 
-//블루투스
-int Tx=2; //전송,보라
-int Rx=3; //수신,파랑
+//�������
+int Tx=2; //����,����
+int Rx=3; //����,�Ķ�
  
 SoftwareSerial btSerial(Tx, Rx);
 
-//차 운행 기준
-//1,2가 오른쪽 뒤 모터
-//3,4가 왼쪽 뒤 모터
-int IN1=7;//빨
-int IN2=6;//주
-int IN3=4;//노
-int IN4=5;//초
+//�� ���� ����
+//1,2�� ������ �� ����
+//3,4�� ���� �� ����
+int IN1=7;//��
+int IN2=6;//��
+int IN3=4;//��
+int IN4=5;//��
 
-//5,6가 오른쪽 앞 모터
-//7,8가 왼쪽 앞 모터
-//앞바퀴
-int IN5=10;//빨
-int IN6=11;//주
-int IN7=8;//노
-int IN8=9;//초
+//5,6�� ������ �� ����
+//7,8�� ���� �� ����
+//�չ���
+int IN5=10;//��
+int IN6=11;//��
+int IN7=8;//��
+int IN8=9;//��
 
 void setup() {
-  //블루투스
+  //�������
   Serial.begin(9600);
   btSerial.begin(9600);
   
-  //자동차이동
+  //�ڵ����̵�
   pinMode(IN1,OUTPUT);
   pinMode(IN2,OUTPUT);
   pinMode(IN3,OUTPUT);
@@ -39,50 +39,46 @@ void setup() {
 }
 
 void loop() {
-  //블루트스
+  //���Ʈ��
    
     
-  if (btSerial.available()) {    //수신
+  if (btSerial.available() > 0) {    //����
     char command = btSerial.read();
     Serial.write(command);
     switch(command)
     {
-      case '1'://좌
-      Stop();
+      case '1'://��
       Left();
       break;
 
-      case '2'://전진
-      Stop();
+      case '2'://����
       Up();
       break;
 
-      case '3'://우
-      Stop();
+      case '3'://��
       Right();
       break;
 
-      case '4'://정지
+      case '4'://����
       Stop();
       break;
      
-      case '5'://후진
-      Stop();
+      case '5'://����
       Down();
       break;
 
    
     }
   }
-  if (Serial.available()) {//전송         
+  if (Serial.available()) {//����         
     btSerial.write(Serial.read());
   }
 }
 
 
-//LOW,HIGH 전진
-//HIGH,LOW 후진
-//좌전진, case1
+//LOW,HIGH ����
+//HIGH,LOW ����
+//������, case1
 void Left()
 {
     digitalWrite(IN1,LOW);
@@ -94,7 +90,7 @@ void Left()
     digitalWrite(IN7,HIGH);
     digitalWrite(IN8,LOW);
 }
-//전진, case2
+//����, case2
 void Up()
 {
     digitalWrite(IN1,LOW);
@@ -107,7 +103,7 @@ void Up()
     digitalWrite(IN8,HIGH);
 }
 
-//우전진, case3
+//������, case3
 void Right()
 {
     digitalWrite(IN1,HIGH);
@@ -121,7 +117,7 @@ void Right()
 }
 
 
-//정지, case4
+//����, case4
 void Stop()
 {
     digitalWrite(IN1,LOW);
@@ -135,7 +131,7 @@ void Stop()
 }
 
 
-//후진, case6
+//����, case6
 void Down()
 {
     digitalWrite(IN1,HIGH);
@@ -154,8 +150,8 @@ void Down()
 /*
 #include <SoftwareSerial.h>
  
-int Tx=6; //전송
-int Rx=7; //수신
+int Tx=6; //����
+int Rx=7; //����
  
 SoftwareSerial btSerial(Tx, Rx);
  
