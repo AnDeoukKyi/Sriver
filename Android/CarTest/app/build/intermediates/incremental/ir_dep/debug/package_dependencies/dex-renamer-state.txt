@@ -1,0 +1,4 @@
+#Wed Oct 16 15:30:45 KST 2019
+base.0=C\:\\Users\\An\\Documents\\GitHub\\Sriver\\Android\\CarTest\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\11
+path.0=classes.dex
+renamed.0=classes.dex

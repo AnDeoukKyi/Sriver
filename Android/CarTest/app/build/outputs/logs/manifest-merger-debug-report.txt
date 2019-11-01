@@ -1,0 +1,154 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\38c19062971f6a67b7930c4c5a07db2e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\An\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\0646395dd73dca2afe3df8217a8fa97d\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\105f39c7057039a47b2a54c0b9019bb3\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\f6b53b8a15e53fa02f1cbd681049fff1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\e778a0d44c6b143a59653558750a43fb\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\1da5f94e323218d4219d763f2ca8604f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\0ba75946f46582c13494490df985d2c0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\652b6023b91249f7a418627d5a247025\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\9d6d682afbb5bc52275d99287d5c9364\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\665a6353942d27b78a2b014c7583bc5e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\6fe109f85280507c38400e4d40289430\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\c8875f4c892092456f3ca5b7b006d64a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\1a2b569cac25aa43bc33331582acbf91\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\719838b0958c783e30733bb873752de4\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\672115cf4173e1741ca3c2b54608aab9\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\4c5f96052e205cec902ad92cef1b2b1a\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\a9d4d9efcce954b50b6c162ab6b7fa50\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\e8138ec39b9a5daec058e4e16070a7d9\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\d2e537fc9e69b76ccdf2926eebae99b0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\173b3a5ac59dc6195e1994b347f4ac22\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\9616ad6af93fcbae207d58c378293f86\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\d6fc00eb64877f8c89310a19cca8138c\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\78e155953305374a0ad8d5739c677a25\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\37c72eb9d7ea6a7ac6424c0e65a87fc3\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\aa7f2cde349cbf83bf2489b8d7a0f6ce\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\af836ec93847443314dad5e5154c8927\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\ede5ad6162c9c874bda521e746ecd777\AndroidManifest.xml:17:1-22:12
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+	package
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:3:5-37
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:1-21:12
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:5:5-19:19
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\An\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\0646395dd73dca2afe3df8217a8fa97d\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\An\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\0646395dd73dca2afe3df8217a8fa97d\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\4c5f96052e205cec902ad92cef1b2b1a\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\4c5f96052e205cec902ad92cef1b2b1a\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\a9d4d9efcce954b50b6c162ab6b7fa50\AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\a9d4d9efcce954b50b6c162ab6b7fa50\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\4c5f96052e205cec902ad92cef1b2b1a\AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:10:9-35
+	android:label
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:8:9-41
+	android:roundIcon
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:9:9-54
+	android:icon
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:7:9-43
+	android:allowBackup
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:11:9-59
+activity#com.example.an.cartest.MainActivity
+ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:12:9-18:20
+	android:name
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:12:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:16:17-77
+	android:name
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml:16:27-74
+uses-sdk
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\38c19062971f6a67b7930c4c5a07db2e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\38c19062971f6a67b7930c4c5a07db2e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\An\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\0646395dd73dca2afe3df8217a8fa97d\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\An\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\0646395dd73dca2afe3df8217a8fa97d\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\105f39c7057039a47b2a54c0b9019bb3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\105f39c7057039a47b2a54c0b9019bb3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\f6b53b8a15e53fa02f1cbd681049fff1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\f6b53b8a15e53fa02f1cbd681049fff1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\e778a0d44c6b143a59653558750a43fb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\e778a0d44c6b143a59653558750a43fb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\1da5f94e323218d4219d763f2ca8604f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\1da5f94e323218d4219d763f2ca8604f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\0ba75946f46582c13494490df985d2c0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\0ba75946f46582c13494490df985d2c0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\652b6023b91249f7a418627d5a247025\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\652b6023b91249f7a418627d5a247025\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\9d6d682afbb5bc52275d99287d5c9364\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\9d6d682afbb5bc52275d99287d5c9364\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\665a6353942d27b78a2b014c7583bc5e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\665a6353942d27b78a2b014c7583bc5e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\6fe109f85280507c38400e4d40289430\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\6fe109f85280507c38400e4d40289430\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\c8875f4c892092456f3ca5b7b006d64a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\c8875f4c892092456f3ca5b7b006d64a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\1a2b569cac25aa43bc33331582acbf91\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\1a2b569cac25aa43bc33331582acbf91\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\719838b0958c783e30733bb873752de4\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\719838b0958c783e30733bb873752de4\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\672115cf4173e1741ca3c2b54608aab9\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\672115cf4173e1741ca3c2b54608aab9\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\4c5f96052e205cec902ad92cef1b2b1a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\4c5f96052e205cec902ad92cef1b2b1a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\a9d4d9efcce954b50b6c162ab6b7fa50\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\a9d4d9efcce954b50b6c162ab6b7fa50\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\e8138ec39b9a5daec058e4e16070a7d9\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\e8138ec39b9a5daec058e4e16070a7d9\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\d2e537fc9e69b76ccdf2926eebae99b0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\d2e537fc9e69b76ccdf2926eebae99b0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\173b3a5ac59dc6195e1994b347f4ac22\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\173b3a5ac59dc6195e1994b347f4ac22\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\9616ad6af93fcbae207d58c378293f86\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\9616ad6af93fcbae207d58c378293f86\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\d6fc00eb64877f8c89310a19cca8138c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\d6fc00eb64877f8c89310a19cca8138c\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\78e155953305374a0ad8d5739c677a25\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\78e155953305374a0ad8d5739c677a25\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\37c72eb9d7ea6a7ac6424c0e65a87fc3\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\37c72eb9d7ea6a7ac6424c0e65a87fc3\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\aa7f2cde349cbf83bf2489b8d7a0f6ce\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\aa7f2cde349cbf83bf2489b8d7a0f6ce\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\af836ec93847443314dad5e5154c8927\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\An\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\af836ec93847443314dad5e5154c8927\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\ede5ad6162c9c874bda521e746ecd777\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\An\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\ede5ad6162c9c874bda521e746ecd777\AndroidManifest.xml:20:5-44
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\An\Documents\GitHub\Sriver\Android\CarTest\app\src\main\AndroidManifest.xml

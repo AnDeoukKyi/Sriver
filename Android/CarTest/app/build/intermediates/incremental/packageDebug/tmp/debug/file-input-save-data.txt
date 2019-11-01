@@ -1,0 +1,11 @@
+#Internal package file, do not edit.
+#Wed Oct 16 15:30:47 KST 2019
+1.base=C\:\\Users\\An\\Documents\\GitHub\\Sriver\\Android\\CarTest\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\13
+0.baseType=DIRECTORY
+1.baseType=DIRECTORY
+count=2
+1.set=DEX
+0.path=classes.dex
+0.set=DEX
+0.base=C\:\\Users\\An\\Documents\\GitHub\\Sriver\\Android\\CarTest\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\12
+1.path=classes.dex
